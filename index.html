@@ -1,21 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abu Sayed - Best Unity & Web Developer in Bangladesh</title>
-    
+
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Abu Sayed - Best Unity and Web Developer in Bangladesh. Expertise in Laravel, Unity Game Development, and AI Integration. View portfolio & projects.">
-    <meta name="keywords" content="abu sayed, web developer bangladesh, unity developer, top developer bangladesh, laravel developer dhaka">
-    
+    <!-- Primary Meta Tags -->
+    <title>Abu Sayed - Best Unity & Web Developer in Bangladesh</title>
+    <meta name="title" content="Abu Sayed - Best Unity & Web Developer in Bangladesh" />
+    <meta name="description"
+        content="Abu Sayed - Best Unity and Web Developer in Bangladesh. Expertise in Laravel, Unity Game Development, and AI Integration. View portfolio & projects." />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://imabusayed.github.io/abu-sayed-dev-portfolio/" />
+    <meta property="og:title" content="Abu Sayed - Best Unity & Web Developer in Bangladesh" />
+    <meta property="og:description"
+        content="Abu Sayed - Best Unity and Web Developer in Bangladesh. Expertise in Laravel, Unity Game Development, and AI Integration. View portfolio & projects." />
+    <meta property="og:image" content="https://abusayed.com.bd/wp-content/uploads/2024/11/Abu-Sayed-Best-Unity-Web-Developer-in-Bangladesh-scaled.webp" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://imabusayed.github.io/abu-sayed-dev-portfolio/" />
+    <meta property="twitter:title" content="Abu Sayed - Best Unity & Web Developer in Bangladesh" />
+    <meta property="twitter:description"
+        content="Abu Sayed - Best Unity and Web Developer in Bangladesh. Expertise in Laravel, Unity Game Development, and AI Integration. View portfolio & projects." />
+    <meta property="twitter:image" content="https://abusayed.com.bd/wp-content/uploads/2024/11/Abu-Sayed-Best-Unity-Web-Developer-in-Bangladesh-scaled.webp" />
+    <meta name="keywords"
+        content="abu sayed, web developer, best web developer bangladesh, unity developer, best unity developer bangladesh, best laravel developer dhaka">
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://abusayed.com.bd/wp-content/uploads/2021/09/Abu-Sayed.png">
-    
+
     <!-- External CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+
     <style>
         :root {
             --primary-black: #0a0a0a;
@@ -80,9 +102,17 @@
         }
 
         @keyframes glowPulse {
-            0% { text-shadow: 0 0 5px var(--primary-orange); }
-            50% { text-shadow: 0 0 20px var(--primary-orange); }
-            100% { text-shadow: 0 0 5px var(--primary-orange); }
+            0% {
+                text-shadow: 0 0 5px var(--primary-orange);
+            }
+
+            50% {
+                text-shadow: 0 0 20px var(--primary-orange);
+            }
+
+            100% {
+                text-shadow: 0 0 5px var(--primary-orange);
+            }
         }
 
         /* Typing animation */
@@ -94,13 +124,25 @@
         }
 
         @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
         }
 
         @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: var(--primary-orange) }
+
+            from,
+            to {
+                border-color: transparent
+            }
+
+            50% {
+                border-color: var(--primary-orange)
+            }
         }
 
         /* Card hover effects */
@@ -122,12 +164,10 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 107, 0, 0.2),
-                transparent
-            );
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 107, 0, 0.2),
+                    transparent);
             transition: 0.5s;
         }
 
@@ -147,11 +187,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(
-                135deg,
-                var(--primary-black) 0%,
-                var(--secondary-black) 100%
-            );
+            background: linear-gradient(135deg,
+                    var(--primary-black) 0%,
+                    var(--secondary-black) 100%);
             position: relative;
             overflow: hidden;
         }
@@ -164,13 +202,11 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent 0,
-                transparent 40px,
-                rgba(255, 107, 0, 0.1) 40px,
-                rgba(255, 107, 0, 0.1) 41px
-            );
+            background: repeating-linear-gradient(0deg,
+                    transparent 0,
+                    transparent 40px,
+                    rgba(255, 107, 0, 0.1) 40px,
+                    rgba(255, 107, 0, 0.1) 41px);
             pointer-events: none;
         }
 
@@ -201,20 +237,27 @@
             left: -5px;
             right: -5px;
             bottom: -5px;
-            background: linear-gradient(45deg, 
-                var(--primary-orange),
-                var(--primary-yellow),
-                var(--primary-red)
-            );
+            background: linear-gradient(45deg,
+                    var(--primary-orange),
+                    var(--primary-yellow),
+                    var(--primary-red));
             border-radius: 18px;
             z-index: 0;
             animation: borderGlow 3s linear infinite;
         }
 
         @keyframes borderGlow {
-            0% { filter: blur(5px); }
-            50% { filter: blur(10px); }
-            100% { filter: blur(5px); }
+            0% {
+                filter: blur(5px);
+            }
+
+            50% {
+                filter: blur(10px);
+            }
+
+            100% {
+                filter: blur(5px);
+            }
         }
 
         /* Section Headers */
@@ -229,7 +272,8 @@
         }
 
         .section-header::after {
-            content: '</>'; /* Code brackets */
+            content: '</>';
+            /* Code brackets */
             position: absolute;
             right: 0;
             color: rgba(255, 107, 0, 0.2);
@@ -383,10 +427,12 @@
     </style>
     <style>
         /* Custom Cursor Styles */
-        .cursor-play, .cursor-pause, .cursor-playing {
+        .cursor-play,
+        .cursor-pause,
+        .cursor-playing {
             cursor: none !important;
         }
-    
+
         #custom-cursor {
             width: 30px;
             height: 30px;
@@ -399,12 +445,12 @@
             align-items: center;
             justify-content: center;
         }
-    
+
         #custom-cursor svg {
             width: 100%;
             height: 100%;
         }
-    
+
         /* Floating TTS Control Button */
         #tts-control {
             position: fixed;
@@ -422,17 +468,17 @@
             z-index: 1000;
             transition: all 0.3s ease;
         }
-    
+
         #tts-control:hover {
             transform: scale(1.1);
         }
-    
+
         #tts-control svg {
             width: 24px;
             height: 24px;
             color: white;
         }
-    
+
         /* TTS Status Indicator */
         #tts-status {
             position: fixed;
@@ -449,17 +495,24 @@
             z-index: 1000;
             backdrop-filter: blur(5px);
         }
-    
+
         #tts-status.visible {
             display: flex;
             animation: slideIn 0.3s ease;
         }
-    
+
         @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
-    
+
         /* Animated Wave for Playing Status */
         .wave {
             display: flex;
@@ -467,7 +520,7 @@
             gap: 2px;
             height: 15px;
         }
-    
+
         .wave-bar {
             width: 2px;
             height: 100%;
@@ -475,25 +528,41 @@
             animation: wave 1s ease infinite;
             border-radius: 2px;
         }
-    
-        .wave-bar:nth-child(2) { animation-delay: 0.2s; }
-        .wave-bar:nth-child(3) { animation-delay: 0.4s; }
-        .wave-bar:nth-child(4) { animation-delay: 0.6s; }
-    
+
+        .wave-bar:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .wave-bar:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .wave-bar:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+
         @keyframes wave {
-            0%, 100% { height: 15px; }
-            50% { height: 5px; }
+
+            0%,
+            100% {
+                height: 15px;
+            }
+
+            50% {
+                height: 5px;
+            }
         }
     </style>
-    
+
 </head>
+
 <body>
     <div id="custom-cursor">
         <svg class="play-icon" viewBox="0 0 24 24" fill="white">
-            <path d="M8 5v14l11-7z"/>
+            <path d="M8 5v14l11-7z" />
         </svg>
     </div>
-    
+
     <div id="tts-status">
         <div class="wave">
             <div class="wave-bar"></div>
@@ -503,10 +572,10 @@
         </div>
         <span>Reading text...</span>
     </div>
-    
+
     <button id="tts-control">
         <svg class="pause-icon" viewBox="0 0 24 24" fill="white">
-            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
         </svg>
     </button>
     <!-- Matrix Rain Effect -->
@@ -518,9 +587,17 @@
                 <h1 class="glow-text typing-animation">Abu Sayed</h1>
                 <h2 class="glow-text typing-animation">⚡ Full-Stack Developer | 🎮 Unity Expert | 🤖 AI Integration</h2>
                 <p>Dhaka, Bangladesh</p>
-                <p>Phone: +8801925785462 | Email: <a href="mailto:hi@abusayed.com.bd" style="color: var(--primary-orange);text-decoration: none;">hi@abusayed.com.bd</a> | <a href="https://abusayed.com.bd/" style="color: var(--primary-orange);text-decoration: none;">Website</a> | <a href="https://abu-sayed.medium.com/" style="color: var(--primary-orange);text-decoration: none;">Blog</a> | <a href="https://bd.linkedin.com/in/imabusayed" target="_blank" style="color: var(--primary-orange);text-decoration: none;">LinkedIn</a></p>
+                <p>Phone: +8801925785462 | Email: <a href="mailto:hi@abusayed.com.bd"
+                        style="color: var(--primary-orange);text-decoration: none;">hi@abusayed.com.bd</a> | <a
+                        href="https://abusayed.com.bd/"
+                        style="color: var(--primary-orange);text-decoration: none;">Website</a> | <a
+                        href="https://abu-sayed.medium.com/"
+                        style="color: var(--primary-orange);text-decoration: none;">Blog</a> | <a
+                        href="https://bd.linkedin.com/in/imabusayed" target="_blank"
+                        style="color: var(--primary-orange);text-decoration: none;">LinkedIn</a></p>
                 <div class="profile-container">
-                    <img src="https://abusayed.com.bd/wp-content/uploads/2021/09/Abu-Sayed.png" alt="Abu Sayed" class="profile-img">
+                    <img src="https://abusayed.com.bd/wp-content/uploads/2021/09/Abu-Sayed.png" alt="Abu Sayed"
+                        class="profile-img">
                 </div>
             </div>
         </div>
@@ -528,7 +605,10 @@
 
     <div class="container">
         <h3 class="section-header">Career Objective</h3>
-        <p>Ambitious IT professional with expertise in web development, systems administration, computer networking, DevOps methodologies and tools. Able to manage complex technical projects from concept to completion. Seeking to utilize skills to help companies implement efficient technology solutions, specifically in the field of data analytics.</p>
+        <p>Ambitious IT professional with expertise in web development, systems administration, computer networking,
+            DevOps methodologies and tools. Able to manage complex technical projects from concept to completion.
+            Seeking to utilize skills to help companies implement efficient technology solutions, specifically in the
+            field of data analytics.</p>
 
         <h3 class="section-header">Core Skills</h3>
         <div class="skills">
@@ -569,11 +649,14 @@
                     <li>Taught AI Voice-to-Voice Chat Bot development using OpenAI API models in PHP and Laravel.</li>
                     <li>Mentored IoT and Robotics Engineering students on backend development best practices.</li>
                     <li>Developed and implemented an AI-powered job matching platform.</li>
-                    <li>Developed and maintained high-performance, reusable, and reliable code for web applications using ReactJS and Laravel framework.</li>
+                    <li>Developed and maintained high-performance, reusable, and reliable code for web applications
+                        using ReactJS and Laravel framework.</li>
                     <li>Designed, coded, tested, and implemented software according to design specifications.</li>
-                    <li>Utilized strong knowledge of PHP, MySQL, JavaScript, CSS, HTML, and front-end languages to build and improve web applications.</li>
-                    <li>Integrated third-party services and APIs to fulfill customer requirements.</li> 
-                    <li>Contributed to the development of audio, video calling systems, and live streaming features.</li>
+                    <li>Utilized strong knowledge of PHP, MySQL, JavaScript, CSS, HTML, and front-end languages to build
+                        and improve web applications.</li>
+                    <li>Integrated third-party services and APIs to fulfill customer requirements.</li>
+                    <li>Contributed to the development of audio, video calling systems, and live streaming features.
+                    </li>
                     <li>Worked with cloud-based infrastructure and platform services.</li>
                     <li>Maintained documentation on SDLC and application requirements.</li>
                     <li>Employed development environment tools and techniques like Git and CI/CD.</li>
@@ -583,12 +666,20 @@
             <div class="timeline-item hover-card">
                 <h4>Business Data Analyst @ Otto Spinning Ltd. (March 2021 - April 2024)</h4>
                 <ul>
-                    <li>Analyzed complex business data from multiple sources to identify trends, patterns, and opportunities for process optimization and cost savings.</li>
-                    <li>Developed comprehensive reports, dashboards, and data visualizations to communicate insights and recommendations to senior management.</li>
-                    <li>Collaborated closely with cross-functional teams, including production, quality control, and supply chain, to drive data-driven decision-making.</li>
-                    <li>Conducted in-depth analyses of production data, sales data, and market trends to support strategic planning and forecasting.</li> 
-                    <li>Implemented data governance policies and procedures to ensure data quality, integrity, and security.</li>
-                    <li>Achievements: Developed a predictive model for yarn demand forecasting, resulting in a 15% reduction in excess inventory and associated costs. Optimized the production scheduling process, leading to a 10% increase in overall efficiency and throughput. Implemented data quality checks and validation processes, improving data accuracy by 20%.</li>
+                    <li>Analyzed complex business data from multiple sources to identify trends, patterns, and
+                        opportunities for process optimization and cost savings.</li>
+                    <li>Developed comprehensive reports, dashboards, and data visualizations to communicate insights and
+                        recommendations to senior management.</li>
+                    <li>Collaborated closely with cross-functional teams, including production, quality control, and
+                        supply chain, to drive data-driven decision-making.</li>
+                    <li>Conducted in-depth analyses of production data, sales data, and market trends to support
+                        strategic planning and forecasting.</li>
+                    <li>Implemented data governance policies and procedures to ensure data quality, integrity, and
+                        security.</li>
+                    <li>Achievements: Developed a predictive model for yarn demand forecasting, resulting in a 15%
+                        reduction in excess inventory and associated costs. Optimized the production scheduling process,
+                        leading to a 10% increase in overall efficiency and throughput. Implemented data quality checks
+                        and validation processes, improving data accuracy by 20%.</li>
                 </ul>
             </div>
 
@@ -602,10 +693,12 @@
                     <li>Authored technical documentation and admin guides.</li>
                     <li>Researched and developed SAAS products as an Admin.</li>
                     <li>Created various online tools using PHP, CodeIgniter.</li>
-                    <li>Engaged in copywriting and SEO using tools such as Google Keyword Planner, Semrush, Screaming Frog, etc.</li>
+                    <li>Engaged in copywriting and SEO using tools such as Google Keyword Planner, Semrush, Screaming
+                        Frog, etc.</li>
                     <li>Developed web scraping scripts for data collection.</li>
                     <li>Managed WordPress (CMS) and debugged code errors.</li>
-                    <li>Managed Web server, Webmaster and Analytics Tools such as Google Search Console, Bing & Yandex Webmaster.</li>
+                    <li>Managed Web server, Webmaster and Analytics Tools such as Google Search Console, Bing & Yandex
+                        Webmaster.</li>
                     <li>Worked with different 3rd Party Ad Network Platforms including Google Adsense.</li>
                     <li>Successfully ran and managed Google Ads, Facebook Ads and other social media ads.</li>
                 </ul>
@@ -633,13 +726,15 @@
         <h3 class="section-header">Education</h3>
         <div class="timeline">
             <div class="timeline-item hover-card">
-                <p><b>Bachelor of Science (BSc.)</b><br>Bangladesh Institute of Science and Technology, Dhaka<br><i>Computer Science & Engineering (CSE)</i></p>
+                <p><b>Bachelor of Science (BSc.)</b><br>Bangladesh Institute of Science and Technology,
+                    Dhaka<br><i>Computer Science & Engineering (CSE)</i></p>
             </div>
             <div class="timeline-item hover-card">
                 <p><b>Higher Secondary School Certificate (HSC)</b><br>Govt. Bangla College, Dhaka<br><i>Science</i></p>
             </div>
             <div class="timeline-item hover-card">
-                <p><b>Secondary School Certificate (SSC)</b><br>Govt Science College Attached High School, Dhaka<br><i>Science</i></p>
+                <p><b>Secondary School Certificate (SSC)</b><br>Govt Science College Attached High School,
+                    Dhaka<br><i>Science</i></p>
             </div>
         </div>
 
@@ -648,8 +743,10 @@
             <li class="skill-tag">PeopleNTech • Cisco Certified Network Associate (CCNA) Training</li>
             <li class="skill-tag">PeopleNTech • MikroTik Configuration Training</li>
             <li class="skill-tag">Interactive Care • DevOps Training - In Progress</li>
-            <li class="skill-tag">BASIS 🤝 SEIP 🤝 PeopleNTech Institute of IT • Server Administration Including Windows Server Management Training</li>
-            <li class="skill-tag">Workplace Skills Development Academy (WSDA) New Zealand • Professional English Communication</li>
+            <li class="skill-tag">BASIS 🤝 SEIP 🤝 PeopleNTech Institute of IT • Server Administration Including Windows
+                Server Management Training</li>
+            <li class="skill-tag">Workplace Skills Development Academy (WSDA) New Zealand • Professional English
+                Communication</li>
             <li class="skill-tag">Royale Capital LTD. • Fundamental Analysis of Stock Market Companies</li>
             <li class="skill-tag">Google • Python Automation</li>
             <li class="skill-tag">BYLCx • Effective Teamwork</li>
@@ -665,9 +762,12 @@
 
         <h3 class="section-header">Connections</h3>
         <div class="social-links">
-            <a href="https://github.com/ImAbuSayed" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/imabusayed" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
-            <a href="https://abu-sayed.medium.com/" target="_blank" class="social-link"><i class="fab fa-medium"></i></a>
+            <a href="https://github.com/ImAbuSayed" target="_blank" class="social-link"><i
+                    class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/imabusayed" target="_blank" class="social-link"><i
+                    class="fab fa-linkedin"></i></a>
+            <a href="https://abu-sayed.medium.com/" target="_blank" class="social-link"><i
+                    class="fab fa-medium"></i></a>
         </div>
     </div>
 
@@ -685,15 +785,15 @@
         function drawMatrix() {
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             ctx.fillRect(0, 0, width, height);
-            
+
             ctx.fillStyle = '#ff6b00';
             ctx.font = '15px monospace';
-            
-            for(let i = 0; i < drops.length; i++) {
+
+            for (let i = 0; i < drops.length; i++) {
                 const text = String.fromCharCode(Math.random() * 128);
                 ctx.fillText(text, i * 20, drops[i] * 20);
-                
-                if(drops[i] * 20 > height && Math.random() > 0.975) {
+
+                if (drops[i] * 20 > height && Math.random() > 0.975) {
                     drops[i] = 0;
                 }
                 drops[i]++;
@@ -706,7 +806,7 @@
         function typeWriter(element, text, speed = 50) {
             let i = 0;
             element.innerHTML = '';
-            
+
             function type() {
                 if (i < text.length) {
                     element.innerHTML += text.charAt(i);
@@ -714,12 +814,12 @@
                     setTimeout(type, speed);
                 }
             }
-            
+
             type();
         }
 
         // Initialize typing animations
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const titles = document.querySelectorAll('.typing-animation');
             titles.forEach(title => {
                 const text = title.textContent;
@@ -741,7 +841,7 @@
         });
 
         // Text-to-Speech on click
-        document.body.addEventListener('click', function(event) {
+        document.body.addEventListener('click', function (event) {
             if (event.target.matches('.social-link, .skill-tag, li, h4, p, a')) {
                 const text = event.target.innerText || event.target.textContent;
                 const utterance = new SpeechSynthesisUtterance(text + '.');
@@ -780,12 +880,12 @@
         const ttsControl = document.getElementById('tts-control');
         let isPlaying = false;
         let currentUtterance = null;
-    
+
         // Update cursor position
         document.addEventListener('mousemove', (e) => {
             cursor.style.transform = `translate(${e.clientX - 15}px, ${e.clientY - 15}px)`;
         });
-    
+
         // Show/hide cursor based on hoverable elements
         document.addEventListener('mouseover', (e) => {
             if (e.target.matches('.social-link, .skill-tag, li, h4, p, a')) {
@@ -799,7 +899,7 @@
                 cursor.style.opacity = '0';
             }
         });
-    
+
         // Update cursor icons
         function showPlayCursor() {
             cursor.innerHTML = `
@@ -808,7 +908,7 @@
                 </svg>
             `;
         }
-    
+
         function showPlayingCursor() {
             cursor.innerHTML = `
                 <div class="wave">
@@ -819,7 +919,7 @@
                 </div>
             `;
         }
-    
+
         function showPauseCursor() {
             cursor.innerHTML = `
                 <svg viewBox="0 0 24 24" fill="white">
@@ -827,13 +927,13 @@
                 </svg>
             `;
         }
-    
+
         // TTS Logic
         function startTTS(text) {
             if (currentUtterance) {
                 speechSynthesis.cancel();
             }
-    
+
             currentUtterance = new SpeechSynthesisUtterance(text);
             currentUtterance.onstart = () => {
                 isPlaying = true;
@@ -841,17 +941,17 @@
                 showPlayingCursor();
                 updateTTSControl();
             };
-    
+
             currentUtterance.onend = () => {
                 isPlaying = false;
                 ttsStatus.classList.remove('visible');
                 showPlayCursor();
                 updateTTSControl();
             };
-    
+
             speechSynthesis.speak(currentUtterance);
         }
-    
+
         function stopTTS() {
             if (currentUtterance) {
                 speechSynthesis.cancel();
@@ -861,7 +961,7 @@
                 updateTTSControl();
             }
         }
-    
+
         // Update TTS control button
         function updateTTSControl() {
             ttsControl.innerHTML = isPlaying ? `
@@ -874,38 +974,39 @@
                 </svg>
             `;
         }
-    
+
         // Click handlers
-        document.body.addEventListener('click', function(event) {
+        document.body.addEventListener('click', function (event) {
             if (event.target.matches('.social-link, .skill-tag, li, h4, p, a')) {
                 const text = event.target.innerText || event.target.textContent;
                 startTTS(text);
             }
         });
-    
+
         // Keyboard handler
-        document.addEventListener('keydown', function(event) {
+        document.addEventListener('keydown', function (event) {
             if (isPlaying) {
                 stopTTS();
             }
         });
-    
+
         // TTS Control button handler
-        ttsControl.addEventListener('click', function() {
+        ttsControl.addEventListener('click', function () {
             if (isPlaying) {
                 stopTTS();
             }
         });
-    
+
         // Hide cursor when leaving window
-        document.addEventListener('mouseout', function(event) {
+        document.addEventListener('mouseout', function (event) {
             if (!event.relatedTarget) {
                 cursor.style.opacity = '0';
             }
         });
-    
+
         // Initialize TTS control button
         updateTTSControl();
     </script>
 </body>
+
 </html>
