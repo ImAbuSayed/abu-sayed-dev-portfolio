@@ -1,1292 +1,2118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Abu Sayed | Full Stack Developer | AI Engineer</title>
-  <meta name="description" content="Abu Sayed portfolio. Full Stack Developer, AI Engineer, Unity VR Developer, AWS-focused builder from Bangladesh." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <style>
-    :root{
-      --bg:#06070a;
-      --bg-soft:#0d1117;
-      --panel:rgba(255,255,255,0.04);
-      --panel-2:rgba(255,255,255,0.06);
-      --text:#eefbf3;
-      --muted:#8fa59a;
-      --accent:#00d26a;
-      --accent-2:#00e6ff;
-      --accent-3:#ff7a18;
-      --border:rgba(0,210,106,0.16);
-      --border-strong:rgba(0,230,255,0.35);
-      --heading:'Syne', sans-serif;
-      --body:'Space Grotesk', sans-serif;
-      --mono:'JetBrains Mono', monospace;
-      --shadow:0 20px 70px rgba(0,0,0,0.45);
-    }
-
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{
-      font-family:var(--body);
-      background:
-        radial-gradient(circle at top right, rgba(0,210,106,0.10), transparent 28%),
-        radial-gradient(circle at bottom left, rgba(0,230,255,0.08), transparent 28%),
-        linear-gradient(180deg, #050608 0%, #090d12 100%);
-      color:var(--text);
-      overflow-x:hidden;
-    }
-
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='1'%3E%3Cpath d='M0 70h140M70 0v140'/%3E%3C/g%3E%3C/svg%3E");
-      opacity:.25;
-      pointer-events:none;
-      z-index:0;
-    }
-
-    #bg-canvas{
-      position:fixed;
-      inset:0;
-      z-index:0;
-      opacity:.35;
-      pointer-events:none;
-    }
-
-    .cursor,.cursor-ring{
-      position:fixed;
-      top:0;left:0;
-      pointer-events:none;
-      transform:translate(-50%,-50%);
-      z-index:9999;
-      mix-blend-mode:screen;
-    }
-    .cursor{
-      width:10px;height:10px;
-      border-radius:50%;
-      background:var(--accent);
-    }
-    .cursor-ring{
-      width:34px;height:34px;
-      border-radius:50%;
-      border:1px solid rgba(0,230,255,.7);
-      transition:width .18s,height .18s,border-color .18s;
-    }
-
-    .progress-bar{
-      position:fixed;
-      top:0;left:0;
-      height:3px;
-      width:0;
-      background:linear-gradient(90deg,var(--accent),var(--accent-2),var(--accent-3));
-      z-index:1200;
-      box-shadow:0 0 18px rgba(0,230,255,.45);
-    }
-
-    .container{
-      width:min(1180px, calc(100% - 32px));
-      margin-inline:auto;
-      position:relative;
-      z-index:2;
-    }
-
-    nav{
-      position:sticky;
-      top:0;
-      z-index:1100;
-      backdrop-filter:blur(18px);
-      background:rgba(6,7,10,.72);
-      border-bottom:1px solid rgba(255,255,255,.06);
-    }
-
-    .nav-inner{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      min-height:76px;
-      gap:24px;
-    }
-
-    .logo{
-      color:var(--text);
-      text-decoration:none;
-      font-family:var(--heading);
-      font-size:1.35rem;
-      font-weight:800;
-      letter-spacing:-.03em;
-    }
-    .logo span{color:var(--accent)}
-
-    .nav-links{
-      display:flex;
-      align-items:center;
-      gap:22px;
-      list-style:none;
-    }
-
-    .nav-links a{
-      color:var(--muted);
-      text-decoration:none;
-      font-size:.92rem;
-      transition:.2s ease;
-      position:relative;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active{
-      color:var(--text);
-    }
-
-    .nav-links a.active::after{
-      content:"";
-      position:absolute;
-      left:0;bottom:-10px;
-      width:100%;
-      height:2px;
-      background:linear-gradient(90deg,var(--accent),var(--accent-2));
-    }
-
-    .nav-meta{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      color:var(--accent);
-      font-family:var(--mono);
-      font-size:.76rem;
-      white-space:nowrap;
-    }
-
-    .status-dot{
-      width:8px;height:8px;border-radius:50%;
-      background:var(--accent);
-      box-shadow:0 0 0 0 rgba(0,210,106,.5);
-      animation:pulse 1.8s infinite;
-    }
-
-    @keyframes pulse{
-      0%{box-shadow:0 0 0 0 rgba(0,210,106,.45)}
-      70%{box-shadow:0 0 0 10px rgba(0,210,106,0)}
-      100%{box-shadow:0 0 0 0 rgba(0,210,106,0)}
-    }
-
-    .nav-toggle{
-      display:none;
-      background:none;
-      border:none;
-      color:var(--text);
-      font-size:1.2rem;
-      cursor:pointer;
-    }
-
-    section{
-      padding:84px 0;
-      position:relative;
-      z-index:2;
-    }
-
-    .section-kicker{
-      font-family:var(--mono);
-      color:var(--accent);
-      font-size:.8rem;
-      text-transform:uppercase;
-      letter-spacing:.18em;
-      margin-bottom:14px;
-    }
-
-    .section-title{
-      font-family:var(--heading);
-      font-size:clamp(2rem, 4.5vw, 4rem);
-      line-height:.95;
-      letter-spacing:-.04em;
-      margin-bottom:20px;
-    }
-
-    .section-title em{
-      color:var(--accent);
-      font-style:normal;
-    }
-
-    .section-copy{
-      max-width:760px;
-      color:var(--muted);
-      line-height:1.8;
-      font-size:1rem;
-    }
-
-    .hero{
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      padding-top:40px;
-    }
-
-    .hero-grid{
-      display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:48px;
-      align-items:center;
-    }
-
-    .hero-eyebrow{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      color:var(--accent);
-      font-family:var(--mono);
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      font-size:.82rem;
-      margin-bottom:20px;
-    }
-
-    .hero-eyebrow::before{
-      content:"";
-      width:38px;height:1px;
-      background:linear-gradient(90deg,var(--accent),transparent);
-    }
-
-    .hero h1{
-      font-family:var(--heading);
-      font-size:clamp(3.5rem, 9vw, 7rem);
-      line-height:.88;
-      letter-spacing:-.06em;
-      margin-bottom:18px;
-    }
-
-    .hero h1 span{
-      display:block;
-      color:var(--accent);
-    }
-
-    .type-row{
-      display:flex;
-      flex-wrap:wrap;
-      align-items:center;
-      gap:14px;
-      margin-bottom:22px;
-      font-family:var(--mono);
-    }
-
-    .type-label{color:var(--muted)}
-    .typing{
-      min-width:290px;
-      color:var(--accent-2);
-      border-right:2px solid var(--accent-2);
-      white-space:nowrap;
-      overflow:hidden;
-      animation:blink .9s step-end infinite;
-    }
-
-    @keyframes blink{
-      50%{border-color:transparent}
-    }
-
-    .hero-copy{
-      color:var(--muted);
-      font-size:1.02rem;
-      line-height:1.85;
-      max-width:660px;
-      margin-bottom:30px;
-    }
-
-    .hero-chips{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-bottom:30px;
-    }
-
-    .hero-chips span{
-      padding:10px 14px;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.03);
-      border-radius:999px;
-      font-size:.84rem;
-      color:var(--text);
-      backdrop-filter:blur(8px);
-    }
-
-    .actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:14px;
-    }
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      text-decoration:none;
-      border:none;
-      cursor:pointer;
-      padding:14px 18px;
-      border-radius:14px;
-      font-family:var(--mono);
-      font-size:.82rem;
-      transition:transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
-    }
-
-    .btn:hover{transform:translateY(-3px)}
-
-    .btn-primary{
-      background:linear-gradient(135deg,var(--accent),#16f0a1);
-      color:#06110a;
-      box-shadow:0 12px 35px rgba(0,210,106,.25);
-    }
-
-    .btn-secondary{
-      color:var(--text);
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.1);
-    }
-
-    .btn-voice{
-      background:rgba(0,230,255,.09);
-      color:var(--accent-2);
-      border:1px solid rgba(0,230,255,.22);
-    }
-
-    .hero-visual{
-      position:relative;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-    }
-
-    .portrait-shell{
-      position:relative;
-      width:min(420px, 100%);
-      aspect-ratio:4/4.7;
-      padding:16px;
-    }
-
-    .portrait-shell::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      border-radius:28px;
-      background:linear-gradient(135deg,var(--accent),var(--accent-2),#845ef7,var(--accent-3));
-      filter:saturate(1.1);
-      animation:borderShift 6s linear infinite;
-      z-index:1;
-    }
-
-    .portrait-shell::after{
-      content:"";
-      position:absolute;
-      inset:22px;
-      border-radius:22px;
-      background:linear-gradient(180deg, rgba(255,255,255,.06), transparent);
-      border:1px solid rgba(255,255,255,.08);
-      z-index:2;
-      pointer-events:none;
-    }
-
-    @keyframes borderShift{
-      from{filter:hue-rotate(0deg)}
-      to{filter:hue-rotate(360deg)}
-    }
-
-    .portrait-card{
-      position:relative;
-      z-index:3;
-      width:100%;
-      height:100%;
-      border-radius:24px;
-      overflow:hidden;
-      background:#0b1015;
-      box-shadow:var(--shadow);
-    }
-
-    .portrait-card img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      filter:contrast(1.05) saturate(1.02);
-      transform:scale(1.02);
-    }
-
-    .corner-bl,
-    .corner-tr{
-      position:absolute;
-      width:92px;
-      height:92px;
-      z-index:8;
-      pointer-events:none;
-    }
-
-    .corner-bl{
-      left:-10px;
-      bottom:-10px;
-      border-left:3px solid var(--accent);
-      border-bottom:3px solid var(--accent);
-      border-bottom-left-radius:20px;
-    }
-
-    .corner-tr{
-      top:-10px;
-      right:-10px;
-      border-top:3px solid var(--accent-2);
-      border-right:3px solid var(--accent-2);
-      border-top-right-radius:20px;
-    }
-
-    .hero-stats{
-      position:absolute;
-      left:-18px;
-      bottom:-18px;
-      z-index:9;
-      background:rgba(9,13,18,.92);
-      border:1px solid rgba(255,255,255,.08);
-      box-shadow:var(--shadow);
-      border-radius:18px;
-      padding:18px 20px;
-      min-width:150px;
-      backdrop-filter:blur(16px);
-    }
-
-    .hero-stats strong{
-      display:block;
-      font-family:var(--heading);
-      font-size:2.2rem;
-      line-height:1;
-      color:var(--accent);
-    }
-
-    .hero-stats span{
-      display:block;
-      color:var(--muted);
-      font-size:.78rem;
-      margin-top:6px;
-      text-transform:uppercase;
-      letter-spacing:.14em;
-      font-family:var(--mono);
-    }
-
-    .hero-badge{
-      position:absolute;
-      right:-14px;
-      top:-14px;
-      z-index:9;
-      background:rgba(255,122,24,.12);
-      border:1px solid rgba(255,122,24,.28);
-      color:#ffbf94;
-      padding:14px 16px;
-      border-radius:16px;
-      font-family:var(--mono);
-      font-size:.75rem;
-      text-align:center;
-      backdrop-filter:blur(12px);
-    }
-
-    .floating-chip{
-      position:absolute;
-      padding:10px 12px;
-      border-radius:999px;
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.08);
-      font-family:var(--mono);
-      font-size:.72rem;
-      color:var(--text);
-      box-shadow:var(--shadow);
-      animation:floatChip 3.4s ease-in-out infinite;
-    }
-
-    .chip-a{top:16%;left:-14%}
-    .chip-b{top:62%;right:-16%;animation-delay:.7s}
-    .chip-c{bottom:9%;right:5%;animation-delay:1.4s}
-
-    @keyframes floatChip{
-      0%,100%{transform:translateY(0)}
-      50%{transform:translateY(-10px)}
-    }
-
-    .stats-grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:18px;
-      margin-top:26px;
-    }
-
-    .stat-box,
-    .card{
-      background:var(--panel);
-      border:1px solid rgba(255,255,255,.07);
-      border-radius:22px;
-      backdrop-filter:blur(14px);
-    }
-
-    .stat-box{
-      padding:24px;
-      text-align:center;
-    }
-
-    .stat-box h3{
-      font-family:var(--heading);
-      font-size:2.4rem;
-      color:var(--accent);
-      line-height:1;
-      margin-bottom:8px;
-    }
-
-    .stat-box p{
-      color:var(--muted);
-      font-family:var(--mono);
-      font-size:.76rem;
-      text-transform:uppercase;
-      letter-spacing:.12em;
-    }
-
-    .about-grid,
-    .contact-grid{
-      display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:24px;
-      align-items:start;
-    }
-
-    .card{
-      padding:28px;
-      box-shadow:var(--shadow);
-      transition:transform .28s ease, border-color .28s ease, background .28s ease;
-      transform-style:preserve-3d;
-      will-change:transform;
-    }
-
-    .card:hover{
-      transform:translateY(-6px);
-      border-color:var(--border-strong);
-      background:var(--panel-2);
-    }
-
-    .terminal{
-      font-family:var(--mono);
-      font-size:.92rem;
-      line-height:1.9;
-    }
-
-    .terminal .key{color:#8eb09c}
-    .terminal .val{color:var(--accent-2)}
-    .terminal .str{color:#ffb07c}
-    .terminal .num{color:#9c8dff}
-
-    .skills-grid,
-    .projects-grid,
-    .timeline-grid{
-      display:grid;
-      gap:18px;
-    }
-
-    .skills-grid{
-      grid-template-columns:repeat(2,1fr);
-    }
-
-    .skill-card h3,
-    .project-card h3,
-    .timeline-card h3{
-      font-family:var(--heading);
-      font-size:1.25rem;
-      margin-bottom:12px;
-    }
-
-    .skill-tags,
-    .project-tags{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-
-    .skill-tags span,
-    .project-tags span{
-      font-family:var(--mono);
-      font-size:.74rem;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.03);
-      color:var(--text);
-    }
-
-    .timeline-grid{
-      grid-template-columns:1fr 1fr;
-    }
-
-    .timeline-card small{
-      display:block;
-      color:var(--accent);
-      font-family:var(--mono);
-      margin-bottom:10px;
-    }
-
-    .timeline-card p,
-    .project-card p,
-    .skill-card p,
-    .contact-card p{
-      color:var(--muted);
-      line-height:1.75;
-    }
-
-    .projects-grid{
-      grid-template-columns:repeat(3,1fr);
-    }
-
-    .project-card .project-links{
-      margin-top:18px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-    }
-
-    .project-card a{
-      color:var(--accent-2);
-      text-decoration:none;
-      font-family:var(--mono);
-      font-size:.82rem;
-    }
-
-    .contact-list{
-      display:grid;
-      gap:14px;
-      margin-top:16px;
-    }
-
-    .contact-item{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      padding:16px 18px;
-      border-radius:18px;
-      text-decoration:none;
-      color:var(--text);
-      background:rgba(255,255,255,.03);
-      border:1px solid rgba(255,255,255,.07);
-      transition:.2s ease;
-    }
-
-    .contact-item:hover{
-      transform:translateX(6px);
-      border-color:var(--border-strong);
-    }
-
-    .contact-item i{
-      color:var(--accent);
-      width:20px;
-      text-align:center;
-    }
-
-    .reveal{
-      opacity:0;
-      transform:translateY(28px);
-      transition:opacity .7s ease, transform .7s ease;
-    }
-
-    .reveal.visible{
-      opacity:1;
-      transform:translateY(0);
-    }
-
-    footer{
-      padding:32px 0 50px;
-      border-top:1px solid rgba(255,255,255,.07);
-      color:var(--muted);
-      text-align:center;
-      position:relative;
-      z-index:2;
-    }
-
-    @media (max-width: 1000px){
-      .hero-grid,
-      .about-grid,
-      .contact-grid,
-      .projects-grid,
-      .timeline-grid,
-      .skills-grid{
-        grid-template-columns:1fr;
-      }
-      .stats-grid{
-        grid-template-columns:repeat(2,1fr);
-      }
-      .floating-chip{display:none}
-    }
-
-    @media (max-width: 780px){
-      .nav-toggle{display:block}
-      .nav-links{
-        position:absolute;
-        top:76px;
-        left:16px;
-        right:16px;
-        display:none;
-        flex-direction:column;
-        align-items:flex-start;
-        padding:18px;
-        border-radius:18px;
-        background:rgba(9,13,18,.98);
-        border:1px solid rgba(255,255,255,.08);
-      }
-      .nav-links.open{display:flex}
-      .nav-meta{display:none}
-      .hero{min-height:auto;padding-top:22px}
-      .stats-grid{grid-template-columns:1fr}
-      .hero-stats{
-        left:10px;
-        bottom:10px;
-      }
-      .hero-badge{
-        right:10px;
-        top:10px;
-      }
-    }
-
-    @media (hover:none), (pointer:coarse){
-      .cursor,.cursor-ring{display:none}
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abu Sayed — Full Stack Developer | AI Engineer | Unity VR | Bangladesh</title>
+<meta name="description" content="Abu Sayed — Top Full Stack Developer & AI Engineer in Bangladesh. Laravel, React, Unity VR, Flutter, OpenAI. 5+ Years | 50+ Projects. Available for Remote Work Worldwide."/>
+<meta property="og:title" content="Abu Sayed — Full Stack Developer | AI Engineer | Bangladesh"/>
+<meta property="og:image" content="https://abusayed.com.bd/wp-content/uploads/2021/09/Abu-Sayed.png"/>
+<link rel="icon" type="image/png" href="https://abusayed.com.bd/wp-content/uploads/2021/09/Abu-Sayed.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root {
+  --bg: #050508;
+  --bg2: #0a0a10;
+  --bg3: #0f0f1a;
+  --card: rgba(255,255,255,0.03);
+  --border: rgba(0,210,106,0.15);
+  --border-bright: rgba(0,210,106,0.5);
+  --accent: #00d26a;
+  --accent2: #00f5a0;
+  --accent3: #7fff00;
+  --orange: #ff6b35;
+  --blue: #00d4ff;
+  --purple: #b06aff;
+  --text: #e8ffe4;
+  --muted: #6b8f7a;
+  --heading-font: 'Syne', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  --body-font: 'Space Mono', monospace;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+::-webkit-scrollbar{width:6px;background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px;}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--body-font);
+  font-size:14px;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+
+/* ===== NOISE OVERLAY ===== */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:9999;
+  opacity:0.4;
+}
+
+/* ===== CURSOR ===== */
+.cursor{
+  position:fixed;
+  width:12px;height:12px;
+  background:var(--accent);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:99999;
+  transform:translate(-50%,-50%);
+  transition:width 0.2s,height 0.2s,background 0.2s;
+  mix-blend-mode:screen;
+}
+.cursor-ring{
+  position:fixed;
+  width:36px;height:36px;
+  border:1.5px solid var(--accent);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:99998;
+  transform:translate(-50%,-50%);
+  transition:all 0.12s ease;
+  mix-blend-mode:screen;
+}
+body:hover .cursor{opacity:1;}
+
+/* ===== CANVAS ===== */
+#bg-canvas{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  z-index:0;
+  opacity:0.35;
+}
+
+/* ===== NAV ===== */
+nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:1000;
+  padding:1rem 2rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  backdrop-filter:blur(20px);
+  background:rgba(5,5,8,0.8);
+  border-bottom:1px solid var(--border);
+  transition:all 0.3s;
+}
+.nav-logo{
+  font-family:var(--heading-font);
+  font-weight:800;
+  font-size:1.2rem;
+  color:var(--accent);
+  text-decoration:none;
+  letter-spacing:-0.02em;
+}
+.nav-logo span{color:var(--text);}
+.nav-links{
+  display:flex;
+  gap:2rem;
+  list-style:none;
+}
+.nav-links a{
+  color:var(--muted);
+  text-decoration:none;
+  font-size:11px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--accent);}
+.nav-status{
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  font-size:11px;
+  color:var(--accent);
+}
+.status-dot{
+  width:8px;height:8px;
+  background:var(--accent);
+  border-radius:50%;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(0,210,106,0.4);}
+  50%{box-shadow:0 0 0 8px rgba(0,210,106,0);}
+}
+
+/* ===== HERO ===== */
+.hero{
+  position:relative;
+  z-index:1;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  padding:6rem 2rem 4rem;
+  max-width:1200px;
+  margin:0 auto;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4rem;
+  align-items:center;
+  width:100%;
+}
+.hero-eyebrow{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--accent);
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  margin-bottom:1rem;
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+.hero-eyebrow::before{
+  content:'';
+  display:block;
+  width:30px;height:1px;
+  background:var(--accent);
+}
+.hero-name{
+  font-family:var(--heading-font);
+  font-size:clamp(3rem,8vw,6rem);
+  font-weight:800;
+  line-height:0.9;
+  letter-spacing:-0.04em;
+  margin-bottom:1rem;
+}
+.hero-name .line1{
+  display:block;
+  color:var(--text);
+}
+.hero-name .line2{
+  display:block;
+  color:var(--accent);
+  position:relative;
+}
+.hero-roles{
+  font-family:var(--mono);
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:2rem;
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.5rem;
+}
+.hero-roles span{
+  background:rgba(0,210,106,0.07);
+  border:1px solid var(--border);
+  padding:0.25rem 0.75rem;
+  border-radius:2px;
+  color:var(--accent2);
+  font-size:11px;
+}
+.hero-bio{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.8;
+  margin-bottom:2.5rem;
+  font-family:var(--body-font);
+}
+.hero-cta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:1rem;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:0.5rem;
+  padding:0.8rem 1.8rem;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  text-decoration:none;
+  border:none;
+  cursor:pointer;
+  transition:all 0.25s;
+  position:relative;
+  overflow:hidden;
+}
+.btn-primary{
+  background:var(--accent);
+  color:#000;
+}
+.btn-primary:hover{
+  background:var(--accent2);
+  transform:translateY(-2px);
+  box-shadow:0 10px 30px rgba(0,210,106,0.3);
+}
+.btn-secondary{
+  background:transparent;
+  color:var(--accent);
+  border:1px solid var(--border-bright);
+}
+.btn-secondary:hover{
+  background:rgba(0,210,106,0.07);
+  transform:translateY(-2px);
+}
+.btn-download{
+  background:rgba(255,107,53,0.1);
+  color:var(--orange);
+  border:1px solid rgba(255,107,53,0.3);
+}
+.btn-download:hover{
+  background:rgba(255,107,53,0.2);
+  transform:translateY(-2px);
+  box-shadow:0 10px 30px rgba(255,107,53,0.2);
+}
+.btn-download2{
+  background:rgba(0,212,255,0.1);
+  color:var(--blue);
+  border:1px solid rgba(0,212,255,0.3);
+}
+.btn-download2:hover{
+  background:rgba(0,212,255,0.2);
+  transform:translateY(-2px);
+}
+
+/* ===== HERO IMAGE ===== */
+.hero-visual{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+}
+
+.hero-img-wrap{
+  position:relative;
+  width:340px;
+  height:400px;
+  padding:12px;
+  overflow:visible;
+}
+
+.hero-img-border{
+  position:absolute;
+  inset:0;
+  border-radius:8px;
+  background:linear-gradient(135deg,var(--accent),var(--blue),var(--purple),var(--orange));
+  animation:rotateBorder 4s linear infinite;
+  z-index:1;
+}
+
+.hero-img-inner{
+  position:relative;
+  z-index:2;
+  width:100%;
+  height:100%;
+  background:var(--bg2);
+  border-radius:6px;
+  overflow:hidden;
+  padding:2px;
+}
+
+.hero-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:4px;
+  filter:grayscale(20%) contrast(1.1);
+}
+
+/* real visible corner frame accents */
+.hero-img-wrap::before,
+.hero-img-wrap::after{
+  content:'';
+  position:absolute;
+  width:74px;
+  height:74px;
+  pointer-events:none;
+  z-index:6;
+}
+
+.hero-img-wrap::before{
+  left:-10px;
+  bottom:-10px;
+  border-left:2px solid var(--accent2);
+  border-bottom:2px solid var(--accent2);
+}
+
+.hero-img-wrap::after{
+  top:-10px;
+  right:-10px;
+  border-top:2px solid var(--blue);
+  border-right:2px solid var(--blue);
+}
+
+.hero-stats{
+  position:absolute;
+  bottom:-26px;
+  left:-26px;
+  background:var(--bg2);
+  border:1px solid var(--border);
+  padding:1rem 1.5rem;
+  border-radius:4px;
+  backdrop-filter:blur(10px);
+  z-index:5;
+}
+
+.hero-badge{
+  position:absolute;
+  top:-15px;
+  right:-15px;
+  background:rgba(255,107,53,0.1);
+  border:1px solid rgba(255,107,53,0.4);
+  padding:0.75rem 1rem;
+  border-radius:4px;
+  font-size:10px;
+  color:var(--orange);
+  font-family:var(--mono);
+  text-align:center;
+  z-index:5;
+}
+
+/* ===== SECTION BASE ===== */
+.section{
+  position:relative;
+  z-index:1;
+  max-width:1200px;
+  margin:0 auto;
+  padding:5rem 2rem;
+}
+.section-label{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--accent);
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  margin-bottom:0.5rem;
+  display:flex;
+  align-items:center;
+  gap:0.75rem;
+}
+.section-label::before{content:'//'; color:var(--border-bright);}
+.section-title{
+  font-family:var(--heading-font);
+  font-size:clamp(2rem,5vw,3.5rem);
+  font-weight:800;
+  letter-spacing:-0.03em;
+  color:var(--text);
+  line-height:1;
+  margin-bottom:3rem;
+}
+.section-title em{
+  font-style:normal;
+  color:var(--accent);
+}
+
+/* ===== DIVIDER ===== */
+.divider{
+  position:relative;
+  z-index:1;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--border),transparent);
+  max-width:1200px;
+  margin:0 auto;
+}
+
+/* ===== TECH GRID ===== */
+.tech-categories{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:1.5rem;
+}
+.tech-cat{
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:1.5rem;
+  border-radius:4px;
+  position:relative;
+  overflow:hidden;
+  transition:border-color 0.3s,transform 0.3s;
+}
+.tech-cat:hover{
+  border-color:var(--border-bright);
+  transform:translateY(-3px);
+}
+.tech-cat::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(0,210,106,0.03),transparent);
+  pointer-events:none;
+}
+.tech-cat-title{
+  font-family:var(--heading-font);
+  font-size:0.9rem;
+  font-weight:700;
+  color:var(--accent);
+  margin-bottom:1rem;
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+.tech-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.4rem;
+}
+.tech-tag{
+  font-family:var(--mono);
+  font-size:10px;
+  padding:0.3rem 0.6rem;
+  background:rgba(0,210,106,0.06);
+  border:1px solid rgba(0,210,106,0.12);
+  border-radius:2px;
+  color:var(--text);
+  transition:all 0.2s;
+}
+.tech-tag:hover{
+  background:rgba(0,210,106,0.15);
+  border-color:var(--accent);
+  color:var(--accent2);
+}
+
+/* ===== TIMELINE / EXPERIENCE ===== */
+.timeline{
+  position:relative;
+  padding-left:2rem;
+}
+.timeline::before{
+  content:'';
+  position:absolute;
+  left:0;top:0;
+  width:1px;height:100%;
+  background:linear-gradient(to bottom,var(--accent),rgba(0,210,106,0.1));
+}
+.timeline-item{
+  position:relative;
+  margin-bottom:2.5rem;
+}
+.timeline-item::before{
+  content:'';
+  position:absolute;
+  left:-2.4rem;
+  top:0.4rem;
+  width:9px;height:9px;
+  background:var(--accent);
+  border-radius:50%;
+  box-shadow:0 0 12px var(--accent);
+}
+.exp-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:1.5rem;
+  border-radius:4px;
+  transition:border-color 0.3s,transform 0.3s;
+  position:relative;
+  overflow:hidden;
+}
+.exp-card::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(0,210,106,0.02),transparent 70%);
+  pointer-events:none;
+}
+.exp-card:hover{
+  border-color:var(--border-bright);
+  transform:translateX(4px);
+}
+.exp-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  flex-wrap:wrap;
+  gap:0.5rem;
+  margin-bottom:0.75rem;
+}
+.exp-title{
+  font-family:var(--heading-font);
+  font-size:1rem;
+  font-weight:700;
+  color:var(--text);
+}
+.exp-company{
+  color:var(--accent);
+}
+.exp-period{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--muted);
+  background:rgba(0,210,106,0.06);
+  border:1px solid var(--border);
+  padding:0.2rem 0.6rem;
+  border-radius:2px;
+  white-space:nowrap;
+}
+.exp-desc{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.8;
+  margin-bottom:0.75rem;
+}
+.exp-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.3rem;
+}
+.exp-tag{
+  font-family:var(--mono);
+  font-size:9px;
+  padding:0.2rem 0.5rem;
+  background:rgba(0,212,255,0.07);
+  border:1px solid rgba(0,212,255,0.15);
+  border-radius:2px;
+  color:var(--blue);
+}
+
+/* ===== PROJECTS ===== */
+.projects-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+  gap:1.5rem;
+}
+.project-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:1.75rem;
+  transition:all 0.3s;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+}
+.project-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;
+  width:3px;height:0;
+  background:linear-gradient(to bottom,var(--accent),var(--blue));
+  transition:height 0.3s;
+}
+.project-card:hover::before{height:100%;}
+.project-card:hover{
+  border-color:var(--border-bright);
+  transform:translateY(-4px);
+  box-shadow:0 20px 40px rgba(0,0,0,0.4);
+}
+.project-icon{
+  font-size:1.5rem;
+  margin-bottom:1rem;
+}
+.project-name{
+  font-family:var(--heading-font);
+  font-size:1.1rem;
+  font-weight:700;
+  color:var(--text);
+  margin-bottom:0.5rem;
+}
+.project-role{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--accent);
+  margin-bottom:0.75rem;
+}
+.project-desc{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.8;
+  margin-bottom:1rem;
+}
+.project-highlight{
+  display:flex;
+  gap:0.5rem;
+  flex-wrap:wrap;
+  margin-bottom:1rem;
+}
+.highlight-chip{
+  font-family:var(--mono);
+  font-size:10px;
+  padding:0.25rem 0.6rem;
+  border-radius:2px;
+  font-weight:500;
+}
+.chip-green{background:rgba(0,210,106,0.1);border:1px solid rgba(0,210,106,0.25);color:var(--accent);}
+.chip-blue{background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);color:var(--blue);}
+.chip-orange{background:rgba(255,107,53,0.08);border:1px solid rgba(255,107,53,0.2);color:var(--orange);}
+.chip-purple{background:rgba(176,106,255,0.08);border:1px solid rgba(176,106,255,0.2);color:var(--purple);}
+.project-stack{
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.3rem;
+  margin-bottom:1rem;
+}
+.stack-tag{
+  font-size:9px;
+  font-family:var(--mono);
+  padding:0.15rem 0.4rem;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:2px;
+  color:var(--muted);
+}
+.project-link{
+  display:inline-flex;
+  align-items:center;
+  gap:0.4rem;
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--accent);
+  text-decoration:none;
+  border-bottom:1px solid rgba(0,210,106,0.3);
+  padding-bottom:1px;
+  transition:all 0.2s;
+}
+.project-link:hover{color:var(--accent2);border-color:var(--accent2);}
+
+/* ===== MUSIC SECTION ===== */
+.music-section{
+  background:linear-gradient(135deg,rgba(176,106,255,0.05),rgba(0,212,255,0.05));
+  border:1px solid rgba(176,106,255,0.15);
+  border-radius:4px;
+  padding:2.5rem;
+  position:relative;
+  overflow:hidden;
+}
+.music-section::before{
+  content:'♪';
+  position:absolute;
+  right:2rem;top:1rem;
+  font-size:6rem;
+  color:rgba(176,106,255,0.05);
+  line-height:1;
+}
+.music-platforms{
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.75rem;
+  margin-top:1.5rem;
+}
+.platform-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:0.5rem;
+  padding:0.6rem 1rem;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:3px;
+  color:var(--text);
+  text-decoration:none;
+  font-family:var(--mono);
+  font-size:10px;
+  transition:all 0.2s;
+}
+.platform-btn:hover{
+  background:rgba(176,106,255,0.1);
+  border-color:rgba(176,106,255,0.3);
+  color:var(--purple);
+  transform:translateY(-2px);
+}
+
+/* ===== STATS BAR ===== */
+.stats-bar{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1.5rem;
+  margin:3rem 0;
+}
+.stat-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:1.5rem;
+  border-radius:4px;
+  text-align:center;
+  transition:all 0.3s;
+}
+.stat-card:hover{
+  border-color:var(--border-bright);
+  transform:translateY(-3px);
+}
+.stat-big{
+  font-family:var(--heading-font);
+  font-size:2.5rem;
+  font-weight:800;
+  color:var(--accent);
+  line-height:1;
+  margin-bottom:0.25rem;
+}
+.stat-desc{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+}
+
+/* ===== CERTIFICATIONS ===== */
+.cert-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1rem;
+}
+.cert-item{
+  display:flex;
+  align-items:flex-start;
+  gap:0.75rem;
+  padding:1rem;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:4px;
+  transition:all 0.2s;
+}
+.cert-item:hover{
+  border-color:var(--border-bright);
+  transform:translateX(4px);
+}
+.cert-icon{
+  width:32px;height:32px;
+  background:rgba(0,210,106,0.08);
+  border:1px solid var(--border);
+  border-radius:3px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--accent);
+  font-size:14px;
+  flex-shrink:0;
+}
+.cert-name{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--text);
+  line-height:1.5;
+}
+.cert-issuer{
+  font-size:10px;
+  color:var(--muted);
+}
+
+/* ===== CONTACT ===== */
+.contact-grid{
+  display:grid;
+  grid-template-columns:1.5fr 1fr;
+  gap:3rem;
+  align-items:start;
+}
+.contact-info{
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+}
+.contact-item{
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  padding:1rem 1.25rem;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:4px;
+  text-decoration:none;
+  color:var(--text);
+  transition:all 0.2s;
+}
+.contact-item:hover{
+  border-color:var(--border-bright);
+  transform:translateX(4px);
+}
+.contact-icon{
+  color:var(--accent);
+  font-size:16px;
+  width:20px;
+  text-align:center;
+  flex-shrink:0;
+}
+.contact-label{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--muted);
+}
+.contact-val{
+  font-size:12px;
+  color:var(--text);
+}
+.social-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:0.75rem;
+}
+.social-item{
+  display:flex;
+  align-items:center;
+  gap:0.75rem;
+  padding:0.75rem 1rem;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:4px;
+  text-decoration:none;
+  color:var(--muted);
+  font-family:var(--mono);
+  font-size:11px;
+  transition:all 0.2s;
+}
+.social-item:hover{
+  color:var(--accent);
+  border-color:var(--border-bright);
+}
+
+/* ===== DOWNLOAD SECTION ===== */
+.download-section{
+  background:linear-gradient(135deg,rgba(0,210,106,0.05),rgba(0,212,255,0.03));
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:2.5rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:2rem;
+}
+.download-text h3{
+  font-family:var(--heading-font);
+  font-size:1.5rem;
+  font-weight:800;
+  color:var(--text);
+  margin-bottom:0.5rem;
+}
+.download-text p{
+  color:var(--muted);
+  font-size:12px;
+}
+.download-btns{
+  display:flex;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  position:relative;
+  z-index:1;
+  border-top:1px solid var(--border);
+  padding:2rem;
+  text-align:center;
+  color:var(--muted);
+  font-size:11px;
+  font-family:var(--mono);
+}
+
+/* ===== MOBILE HAMBURGER ===== */
+.nav-toggle{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px;}
+.nav-toggle span{display:block;width:20px;height:1.5px;background:var(--accent);}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity 0.6s ease,transform 0.6s ease;
+}
+.reveal.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ===== TERMINAL EFFECT ===== */
+.terminal-text{
+  font-family:var(--mono);
+  font-size:13px;
+  color:var(--accent2);
+  background:var(--bg2);
+  border:1px solid var(--border);
+  padding:1.5rem;
+  border-radius:4px;
+  position:relative;
+  margin-bottom:2rem;
+}
+.terminal-text::before{
+  content:'// system.profile';
+  position:absolute;
+  top:-10px;left:1rem;
+  background:var(--bg);
+  padding:0 0.5rem;
+  font-size:9px;
+  color:var(--muted);
+  border:1px solid var(--border);
+  border-radius:2px;
+}
+.terminal-line{
+  margin-bottom:0.3rem;
+}
+.t-key{color:var(--muted);}
+.t-val{color:var(--accent2);}
+.t-string{color:var(--orange);}
+.t-bracket{color:var(--muted);}
+.t-num{color:var(--purple);}
+
+/* ===== EDUCATION ===== */
+.edu-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.25rem;
+}
+.edu-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:1.5rem;
+  border-radius:4px;
+  transition:all 0.3s;
+}
+.edu-card:hover{
+  border-color:var(--border-bright);
+  transform:translateY(-3px);
+}
+.edu-degree{
+  font-family:var(--heading-font);
+  font-size:0.9rem;
+  font-weight:700;
+  color:var(--accent);
+  margin-bottom:0.4rem;
+}
+.edu-institution{
+  font-size:12px;
+  color:var(--text);
+  margin-bottom:0.25rem;
+}
+.edu-field{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--muted);
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-visual{display:none;}
+  .stats-bar{grid-template-columns:repeat(2,1fr);}
+  .tech-categories{grid-template-columns:1fr;}
+  .edu-grid{grid-template-columns:1fr;}
+  .contact-grid{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+  .nav-toggle{display:flex;}
+  .download-section{flex-direction:column;}
+}
+@media(max-width:600px){
+  .stats-bar{grid-template-columns:repeat(2,1fr);}
+  .projects-grid{grid-template-columns:1fr;}
+}
+</style>
 </head>
 <body>
-  <div class="progress-bar" id="progressBar"></div>
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
-  <canvas id="bg-canvas"></canvas>
 
-  <nav>
-    <div class="container nav-inner">
-      <a href="#home" class="logo">Abu<span>Sayed</span></a>
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#home" class="nav-link active">Home</a></li>
-        <li><a href="#about" class="nav-link">About</a></li>
-        <li><a href="#skills" class="nav-link">Skills</a></li>
-        <li><a href="#experience" class="nav-link">Experience</a></li>
-        <li><a href="#projects" class="nav-link">Projects</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
-      </ul>
+<!-- Background Canvas -->
+<canvas id="bg-canvas"></canvas>
 
-      <div class="nav-meta">
-        <span class="status-dot"></span>
-        <span>Open to remote work worldwide</span>
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Abu<span>Sayed</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#music">Music</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-status">
+    <span class="status-dot"></span>
+    <span>Open to Work · Remote Worldwide</span>
+  </div>
+  <div class="nav-toggle" id="navToggle">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="about">
+  <div class="hero-grid">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Dhaka, Bangladesh · Est. 2019</div>
+      <h1 class="hero-name">
+        <span class="line1">Abu</span>
+        <span class="line2">Sayed</span>
+      </h1>
+      <div class="hero-roles">
+        <span>🚀 Full Stack Developer</span>
+        <span>🤖 AI Engineer</span>
+        <span>🥽 Unity VR Dev</span>
+        <span>☁️ AWS Expert</span>
+        <span>🎵 Musician</span>
       </div>
+      <p class="hero-bio">
+        Multi-disciplinary creator, engineer and recording artist based in Dhaka, Bangladesh. I build scalable AI-powered SaaS platforms, VR systems, and enterprise applications that serve real global production traffic. Founder of a music record label. Creator of a 3D Music Virtual City. 5+ years. 50+ projects delivered worldwide.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">
+          <i class="fas fa-code"></i> View Work
+        </a>
+        <a href="#contact" class="btn btn-secondary">
+          <i class="fas fa-envelope"></i> Hire Me
+        </a>
+        <a href="#download" class="btn btn-download" id="dlCvBtn">
+          <i class="fas fa-file-pdf"></i> Download CV
+        </a>
+        <a href="#download" class="btn btn-download2" id="dlResumeBtn">
+          <i class="fas fa-file-alt"></i> Download Resume
+        </a>
+      </div>
+    </div>
+<div class="hero-visual">
+  <div class="hero-img-wrap">
+    <div class="hero-img-border"></div>
 
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle Menu">
-        <i class="fas fa-bars"></i>
+    <div class="hero-img-inner">
+      <img
+        src="https://abusayed.com.bd/wp-content/uploads/2021/09/Abu-Sayed.png"
+        alt="Abu Sayed"
+        class="hero-img"
+      >
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-num">50+</div>
+      <div class="stat-label">Projects Delivered</div>
+    </div>
+
+    <div class="hero-badge">
+      Open to Work<br>Remote · Worldwide
+    </div>
+  </div>
+</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- STATS -->
+<div class="section" style="padding-top:3rem;padding-bottom:3rem;">
+  <div class="stats-bar reveal">
+    <div class="stat-card">
+      <div class="stat-big">5+</div>
+      <div class="stat-desc">Years Experience</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-big">50+</div>
+      <div class="stat-desc">Projects Delivered</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-big">92%</div>
+      <div class="stat-desc">AI Matching Accuracy</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-big">15%</div>
+      <div class="stat-desc">Inventory Cost Reduction</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ABOUT TERMINAL -->
+<section class="section" id="terminal">
+  <div class="section-label">Profile</div>
+  <h2 class="section-title">Who is <em>Abu Sayed?</em></h2>
+  <div class="terminal-text reveal">
+    <div class="terminal-line"><span class="t-key">name</span>        : <span class="t-string">"Abu Sayed"</span></div>
+    <div class="terminal-line"><span class="t-key">location</span>    : <span class="t-string">"Dhaka, Bangladesh 🇧🇩 (Remote Worldwide 🌍)"</span></div>
+    <div class="terminal-line"><span class="t-key">phone</span>       : <span class="t-string">"+8801925785462"</span></div>
+    <div class="terminal-line"><span class="t-key">email</span>       : <span class="t-string">"hi@abusayed.com.bd"</span></div>
+    <div class="terminal-line"><span class="t-key">roles</span>       : <span class="t-bracket">[</span><span class="t-string">"Full Stack Developer"</span>, <span class="t-string">"AI Engineer"</span>, <span class="t-string">"AWS Expert"</span>, <span class="t-string">"Unity VR Dev"</span>, <span class="t-string">"Musician"</span><span class="t-bracket">]</span></div>
+    <div class="terminal-line"><span class="t-key">experience</span>  : <span class="t-string">"5+ Years | 50+ Projects Delivered"</span></div>
+    <div class="terminal-line"><span class="t-key">status</span>      : <span class="t-val">✅ Open to Freelance, Contract, Remote & Full-Time Roles</span></div>
+    <div class="terminal-line"><span class="t-key">superpowers</span> : <span class="t-string">"Laravel · Flutter · React · Next.js · OpenAI · AWS · Unity3D"</span></div>
+    <div class="terminal-line"><span class="t-key">fun_fact</span>    : <span class="t-string">"Built a 3D Music Virtual City 🥽🎵 & founded a record label 🎙️"</span></div>
+    <div class="terminal-line"><span class="t-key">languages</span>   : <span class="t-bracket">[</span><span class="t-string">"English (Fluent)"</span>, <span class="t-string">"Bangla (Native)"</span><span class="t-bracket">]</span></div>
+    <div class="terminal-line"><span class="t-key">interests</span>   : <span class="t-bracket">[</span><span class="t-string">"Emerging Tech"</span>, <span class="t-string">"AI Research"</span>, <span class="t-string">"Music Production"</span>, <span class="t-string">"Gaming"</span><span class="t-bracket">]</span></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section class="section" id="skills">
+  <div class="section-label">Arsenal</div>
+  <h2 class="section-title">Tech <em>Stack</em></h2>
+  <div class="tech-categories reveal">
+    <div class="tech-cat">
+      <div class="tech-cat-title">🌐 Web & SaaS Development</div>
+      <div class="tech-tags">
+        <span class="tech-tag">PHP</span><span class="tech-tag">Python</span><span class="tech-tag">JavaScript</span>
+        <span class="tech-tag">TypeScript</span><span class="tech-tag">Dart</span><span class="tech-tag">R</span>
+        <span class="tech-tag">C#</span><span class="tech-tag">Laravel</span><span class="tech-tag">React</span>
+        <span class="tech-tag">Next.js</span><span class="tech-tag">Livewire</span><span class="tech-tag">Filament PHP</span>
+        <span class="tech-tag">Tailwind CSS</span><span class="tech-tag">Alpine.js</span>
+        <span class="tech-tag">Node.js</span><span class="tech-tag">Express.js</span>
+        <span class="tech-tag">GraphQL</span><span class="tech-tag">WebSockets</span>
+        <span class="tech-tag">WordPress</span><span class="tech-tag">MySQL</span>
+        <span class="tech-tag">PostgreSQL</span><span class="tech-tag">MongoDB</span><span class="tech-tag">Redis</span>
+      </div>
+    </div>
+    <div class="tech-cat">
+      <div class="tech-cat-title">🤖 AI, ML & Data Engineering</div>
+      <div class="tech-tags">
+        <span class="tech-tag">OpenAI API</span><span class="tech-tag">GPT-4</span><span class="tech-tag">Whisper API</span>
+        <span class="tech-tag">LLM Fine-Tuning</span><span class="tech-tag">Voice-to-Voice AI</span>
+        <span class="tech-tag">TensorFlow</span><span class="tech-tag">PyTorch</span>
+        <span class="tech-tag">Scikit-learn</span><span class="tech-tag">Pandas</span><span class="tech-tag">NumPy</span>
+        <span class="tech-tag">Matplotlib</span><span class="tech-tag">Apache Spark</span>
+        <span class="tech-tag">Tableau</span><span class="tech-tag">Power BI</span>
+        <span class="tech-tag">Prompt Engineering</span>
+      </div>
+    </div>
+    <div class="tech-cat">
+      <div class="tech-cat-title">☁️ Cloud, DevOps & Infrastructure</div>
+      <div class="tech-tags">
+        <span class="tech-tag">AWS</span><span class="tech-tag">Google Cloud</span><span class="tech-tag">Azure</span>
+        <span class="tech-tag">Docker</span><span class="tech-tag">Kubernetes</span>
+        <span class="tech-tag">Jenkins</span><span class="tech-tag">GitLab CI/CD</span>
+        <span class="tech-tag">Terraform</span><span class="tech-tag">Ansible</span>
+        <span class="tech-tag">ELK Stack</span><span class="tech-tag">Prometheus</span><span class="tech-tag">Grafana</span>
+        <span class="tech-tag">Linux</span><span class="tech-tag">Windows Server</span>
+        <span class="tech-tag">Nginx</span><span class="tech-tag">cPanel</span><span class="tech-tag">Webmin</span>
+        <span class="tech-tag">CCNA</span><span class="tech-tag">MikroTik</span>
+      </div>
+    </div>
+    <div class="tech-cat">
+      <div class="tech-cat-title">🎮 Unity, VR/XR & Mobile</div>
+      <div class="tech-tags">
+        <span class="tech-tag">Unity3D</span><span class="tech-tag">C#</span>
+        <span class="tech-tag">VR Development</span><span class="tech-tag">XR Toolkit</span>
+        <span class="tech-tag">Flutter</span><span class="tech-tag">Dart</span>
+        <span class="tech-tag">React Native</span><span class="tech-tag">Expo</span>
+        <span class="tech-tag">Android</span><span class="tech-tag">iOS</span>
+        <span class="tech-tag">Apple Pay</span><span class="tech-tag">Google Play</span>
+        <span class="tech-tag">3D Avatar Systems</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section class="section" id="experience">
+  <div class="section-label">Journey</div>
+  <h2 class="section-title">Professional <em>Experience</em></h2>
+  <div class="timeline">
+
+    <div class="timeline-item reveal">
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">🎓 AI Trainer <span class="exp-company">@ University of Frontier Technology</span></div>
+            <div style="font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:0.2rem;">Kaliakair, Gazipur, Bangladesh · Contract</div>
+          </div>
+          <div class="exp-period">May 2024 — Present</div>
+        </div>
+        <p class="exp-desc">Lead technical expert in a tri-party partnership between Aesthetic Code Lab, Tokyo Gogaku Gakko (Japan), and the university — bridging academia and global tech industry. Teaching AI & Web Development to final-year IoT & Robotics Engineering students.</p>
+        <ul style="color:var(--muted);font-size:12px;padding-left:1.25rem;margin-bottom:0.75rem;">
+          <li>Teaching Artificial Intelligence and Web Application Development</li>
+          <li>Leading hands-on workshops on OpenAI API integration with PHP & Laravel</li>
+          <li>Specialized training on AI Voice-to-Voice chatbot development</li>
+          <li>Designing course materials, evaluating Capstone Projects, mentoring on SDLC workflows</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="exp-tag">OpenAI API</span><span class="exp-tag">Laravel</span><span class="exp-tag">PHP</span><span class="exp-tag">AI Chatbot</span><span class="exp-tag">IoT</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">👨‍💻 Full Stack Developer <span class="exp-company">@ Aesthetic Code Lab</span></div>
+            <div style="font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:0.2rem;">Dhaka, Bangladesh · Lead Laravel, Unity & AI Developer</div>
+          </div>
+          <div class="exp-period">May 2024 — Present</div>
+        </div>
+        <p class="exp-desc">Engineering enterprise-scale platforms serving live global production traffic. Built Unity VR integration, AI-powered job matching (92% accuracy), real-time video conferencing systems, and zero-downtime AWS deployments.</p>
+        <ul style="color:var(--muted);font-size:12px;padding-left:1.25rem;margin-bottom:0.75rem;">
+          <li>🥽 VR Architecture: Unity VR + C# for real-time employee avatar customization</li>
+          <li>🤖 AI Algorithm: Job matching system with 92% accuracy using OpenAI API + Laravel</li>
+          <li>📹 RTC Integration: Jitsi Meet SDK and Zoom API for video conferencing</li>
+          <li>☁️ Cloud & CI/CD: Zero-downtime deployments on AWS with Jenkins pipelines</li>
+          <li>🎓 Designed AI curriculum under MoU with Bangladesh Digital University and TGG</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="exp-tag">Laravel</span><span class="exp-tag">Unity3D</span><span class="exp-tag">OpenAI</span><span class="exp-tag">AWS</span><span class="exp-tag">Jenkins</span><span class="exp-tag">Livewire</span><span class="exp-tag">ReactJS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">📊 Business Data Analyst <span class="exp-company">@ Otto Spinning Ltd.</span></div>
+            <div style="font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:0.2rem;">Gazipur, Bangladesh</div>
+          </div>
+          <div class="exp-period">March 2021 — April 2024</div>
+        </div>
+        <p class="exp-desc">Analyzed complex business data from production, sales, and supply-chain to drive strategic decisions. Developed ML-based forecasting models and comprehensive dashboards for C-suite reporting.</p>
+        <ul style="color:var(--muted);font-size:12px;padding-left:1.25rem;margin-bottom:0.75rem;">
+          <li>Built C-suite dashboards with Tableau and Power BI</li>
+          <li>ML-based yarn demand forecasting → 15% reduction in inventory costs</li>
+          <li>Optimized production scheduling → 10% increase in operational efficiency</li>
+          <li>Data governance frameworks → 20% improvement in data accuracy</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="exp-tag">Tableau</span><span class="exp-tag">Power BI</span><span class="exp-tag">Python</span><span class="exp-tag">Pandas</span><span class="exp-tag">Scikit-learn</span><span class="exp-tag">MySQL</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">🚀 Founder & CTO <span class="exp-company">@ Ai Blogify · Trading Now · ToolsNess</span></div>
+          </div>
+          <div class="exp-period">Nov 2021 — Feb 2024</div>
+        </div>
+        <p class="exp-desc">Architected and scaled multiple AI-powered SaaS products. Managed full-stack infrastructure from VPS servers to CDN, SEO, and paid ad campaigns. Developed web scraping scripts, custom tools, and analytics pipelines.</p>
+        <div class="exp-tags">
+          <span class="exp-tag">PHP</span><span class="exp-tag">CodeIgniter</span><span class="exp-tag">WordPress</span><span class="exp-tag">SEO</span><span class="exp-tag">Google Ads</span><span class="exp-tag">VPS Management</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">🌍 Top-Rated Freelance Web Developer</div>
+          </div>
+          <div class="exp-period">2019 — 2022</div>
+        </div>
+        <p class="exp-desc">Delivered 50+ custom WordPress and PHP/MySQL websites for international clients. Built secure e-commerce platforms with full hosting, maintenance, and cybersecurity management. Consistent on-time, within-budget delivery across regions.</p>
+        <div class="exp-tags">
+          <span class="exp-tag">WordPress</span><span class="exp-tag">PHP</span><span class="exp-tag">MySQL</span><span class="exp-tag">E-commerce</span><span class="exp-tag">Security</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <div class="section-label">Portfolio</div>
+  <h2 class="section-title">Featured <em>Projects</em></h2>
+  <div class="projects-grid">
+
+    <div class="project-card reveal">
+      <div class="project-icon">🗣️</div>
+      <div class="project-name">Ryūgaku Mensetsu System</div>
+      <div class="project-role">Lead Architect & Full Stack Developer · Tokyo Gogaku Gakko, Japan</div>
+      <p class="project-desc">AI-powered Japanese language test platform with real-time proctoring, automated grading using OpenAI Whisper API, and camera-based identity verification.</p>
+      <div class="project-highlight">
+        <span class="highlight-chip chip-green">70% reduction in evaluation time</span>
+        <span class="highlight-chip chip-blue">WebRTC Security</span>
+      </div>
+      <div class="project-stack">
+        <span class="stack-tag">TALL Stack</span><span class="stack-tag">Laravel</span><span class="stack-tag">Livewire</span>
+        <span class="stack-tag">Alpine.js</span><span class="stack-tag">Tailwind CSS</span>
+        <span class="stack-tag">OpenAI Whisper</span><span class="stack-tag">WebRTC</span><span class="stack-tag">MySQL</span>
+      </div>
+      <a href="https://rms-dev.a-cloud.tech/" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-icon">📱</div>
+      <div class="project-name">TOKUTEI GINOU GAKKO App</div>
+      <div class="project-role">Full Stack Mobile Developer · Tokyo Gogaku Gakko, Japan</div>
+      <p class="project-desc">Production-grade mobile learning app for Japanese skill certification, available on iOS and Android with Apple Pay integration and AWS deployment.</p>
+      <div class="project-highlight">
+        <span class="highlight-chip chip-orange">iOS + Android</span>
+        <span class="highlight-chip chip-green">Apple Pay</span>
+        <span class="highlight-chip chip-blue">AWS · Docker · Jenkins</span>
+      </div>
+      <div class="project-stack">
+        <span class="stack-tag">Laravel</span><span class="stack-tag">Flutter</span><span class="stack-tag">Dart</span>
+        <span class="stack-tag">MySQL</span><span class="stack-tag">AWS</span><span class="stack-tag">Docker</span><span class="stack-tag">Jenkins</span>
+      </div>
+      <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+        <a href="https://play.google.com/store/apps/details?id=tokyo.tgg.stepup" target="_blank" class="project-link"><i class="fab fa-google-play"></i> Play Store</a>
+        <a href="https://apps.apple.com/mn/app/tokutei-ginou-gakko/id6747668375" target="_blank" class="project-link"><i class="fab fa-apple"></i> App Store</a>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-icon">🤖</div>
+      <div class="project-name">AI Job Matching System + Unity VR</div>
+      <div class="project-role">Full Stack + VR Developer · 500+ employees onboarded</div>
+      <p class="project-desc">Enterprise employment management system with AI-powered job matching (92% accuracy) and Unity3D VR avatar customization for virtual employee engagement.</p>
+      <div class="project-highlight">
+        <span class="highlight-chip chip-purple">92% AI Accuracy</span>
+        <span class="highlight-chip chip-green">Unity3D VR</span>
+        <span class="highlight-chip chip-orange">500+ Users</span>
+      </div>
+      <div class="project-stack">
+        <span class="stack-tag">Laravel</span><span class="stack-tag">Livewire</span><span class="stack-tag">OpenAI API</span>
+        <span class="stack-tag">Unity3D</span><span class="stack-tag">C#</span><span class="stack-tag">MySQL</span><span class="stack-tag">Tailwind</span>
+      </div>
+      <a href="https://japanskill.work" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-icon">📹</div>
+      <div class="project-name">Interview Management System</div>
+      <div class="project-role">Full Stack Developer</div>
+      <p class="project-desc">Built-in real-time video conferencing via Jitsi Meet SDK and Zoom Meet API integration for hybrid interview workflows with secure candidate management.</p>
+      <div class="project-highlight">
+        <span class="highlight-chip chip-blue">Jitsi Meet</span>
+        <span class="highlight-chip chip-green">Zoom API</span>
+      </div>
+      <div class="project-stack">
+        <span class="stack-tag">Laravel</span><span class="stack-tag">Livewire</span><span class="stack-tag">Jitsi Meet</span>
+        <span class="stack-tag">Zoom API</span><span class="stack-tag">Tailwind CSS</span>
+      </div>
+      <a href="https://interbrew.site" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-icon">🤖</div>
+      <div class="project-name">ChatLab AI — Cross-Platform App</div>
+      <div class="project-role">Full Stack Mobile Developer</div>
+      <p class="project-desc">AI-powered conversational assistant for mobile users built with React Native and Expo. Available on Android via Google Play Store.</p>
+      <div class="project-highlight">
+        <span class="highlight-chip chip-green">OpenAI GPT</span>
+        <span class="highlight-chip chip-orange">React Native</span>
+      </div>
+      <div class="project-stack">
+        <span class="stack-tag">React Native</span><span class="stack-tag">Expo</span>
+        <span class="stack-tag">JavaScript</span><span class="stack-tag">OpenAI API</span>
+      </div>
+      <a href="https://play.google.com/store/apps/details?id=com.abusayed.chatlabai" target="_blank" class="project-link"><i class="fab fa-google-play"></i> Play Store</a>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-icon">🎪</div>
+      <div class="project-name">Event Management System</div>
+      <div class="project-role">Full Stack Developer · Hawaii Aloha Academy</div>
+      <p class="project-desc">Full-featured event management platform built with the TALL stack for Hawaii Aloha Academy.</p>
+      <div class="project-highlight">
+        <span class="highlight-chip chip-green">TALL Stack</span>
+        <span class="highlight-chip chip-blue">Production Live</span>
+      </div>
+      <div class="project-stack">
+        <span class="stack-tag">Laravel</span><span class="stack-tag">Livewire</span>
+        <span class="stack-tag">Tailwind CSS</span>
+      </div>
+      <a href="https://event.hawaiialohaacademy.com" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MUSIC -->
+<section class="section" id="music">
+  <div class="section-label">Beyond Code</div>
+  <h2 class="section-title">Musician & <em>Creator</em></h2>
+  <div class="music-section reveal">
+    <p style="color:var(--muted);font-size:13px;margin-bottom:1rem;max-width:700px;">
+      Beyond the terminal, Abu Sayed is a <strong style="color:var(--text);">multi-lingual recording artist and songwriter</strong> whose music spans Bangla 🇧🇩, Hindi 🇮🇳, Arabic 🇸🇦, Punjabi, and English 🌍. Founder of a music record label and creator of a <strong style="color:var(--purple);">3D Music Virtual City</strong> — an immersive digital world where fans can experience his releases.
+    </p>
+    <a href="https://albums.abusayed.com.bd/3d-city" target="_blank" class="btn btn-secondary" style="margin-bottom:1.5rem;display:inline-flex;">
+      🥽 Explore 3D Music Virtual City
+    </a>
+    <div class="music-platforms">
+      <a href="https://open.spotify.com/artist/6vnjuWLcV3nHwIFeozztMv" target="_blank" class="platform-btn"><i class="fab fa-spotify" style="color:#1db954;"></i> Spotify</a>
+      <a href="https://music.apple.com/ae/artist/abu-sayed/1622976966" target="_blank" class="platform-btn"><i class="fab fa-apple" style="color:#fc3c44;"></i> Apple Music</a>
+      <a href="https://www.youtube.com/@AbuSayedMusic" target="_blank" class="platform-btn"><i class="fab fa-youtube" style="color:#ff0000;"></i> YouTube Music</a>
+      <a href="https://music.amazon.com/artists/B09X1N1F6F/abu-sayed" target="_blank" class="platform-btn"><i class="fab fa-amazon" style="color:#ff9900;"></i> Amazon Music</a>
+      <a href="https://www.deezer.com/en/artist/165449477" target="_blank" class="platform-btn"><i class="fas fa-music" style="color:#a238ff;"></i> Deezer</a>
+      <a href="https://credits.muso.ai/profile/a6653d10-d55e-467d-b55c-55d72b4335ce" target="_blank" class="platform-btn"><i class="fas fa-compact-disc"></i> Credits / Label</a>
+    </div>
+    <div style="margin-top:1.5rem;display:flex;flex-wrap:wrap;gap:0.75rem;">
+      <a href="https://facebook.com/AbuSayed.TheCultOfPersonality" target="_blank" class="platform-btn"><i class="fab fa-facebook" style="color:#1877f2;"></i> Facebook</a>
+      <a href="https://instagram.com/AbuSayedMusic" target="_blank" class="platform-btn"><i class="fab fa-instagram" style="color:#e1306c;"></i> Instagram</a>
+      <a href="https://x.com/AbuSayedMusic" target="_blank" class="platform-btn"><i class="fab fa-x-twitter"></i> X / Twitter</a>
+      <a href="http://tiktok.com/@imabusayed" target="_blank" class="platform-btn"><i class="fab fa-tiktok"></i> TikTok</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section class="section" id="education">
+  <div class="section-label">Academic</div>
+  <h2 class="section-title">Education & <em>Certifications</em></h2>
+  <div class="edu-grid reveal" style="margin-bottom:3rem;">
+    <div class="edu-card">
+      <div class="edu-degree">BSc. Computer Science & Engineering</div>
+      <div class="edu-institution">Bangladesh Institute of Science and Technology, Dhaka</div>
+      <div class="edu-field">Computer Science & Engineering (CSE)</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Higher Secondary Certificate (HSC)</div>
+      <div class="edu-institution">Govt. Bangla College, Dhaka</div>
+      <div class="edu-field">Science</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Secondary School Certificate (SSC)</div>
+      <div class="edu-institution">Govt Science College Attached High School, Dhaka</div>
+      <div class="edu-field">Science</div>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--heading-font);font-weight:700;font-size:1.2rem;color:var(--text);margin-bottom:1.5rem;">Professional Certifications</h3>
+  <div class="cert-grid reveal">
+    <div class="cert-item">
+      <div class="cert-icon"><i class="fas fa-network-wired"></i></div>
+      <div><div class="cert-name">Cisco Certified Network Associate (CCNA)</div><div class="cert-issuer">PeopleNTech</div></div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon"><i class="fas fa-server"></i></div>
+      <div><div class="cert-name">MikroTik Configuration Training</div><div class="cert-issuer">PeopleNTech</div></div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon"><i class="fas fa-infinity"></i></div>
+      <div><div class="cert-name">DevOps Training</div><div class="cert-issuer">Interactive Care</div></div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon"><i class="fab fa-windows"></i></div>
+      <div><div class="cert-name">Server Administration incl. Windows Server</div><div class="cert-issuer">BASIS 🤝 SEIP 🤝 PeopleNTech</div></div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon"><i class="fas fa-comment"></i></div>
+      <div><div class="cert-name">Professional English Communication</div><div class="cert-issuer">WSDA New Zealand</div></div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon"><i class="fas fa-chart-line"></i></div>
+      <div><div class="cert-name">Fundamental Analysis of Stock Market</div><div class="cert-issuer">Royale Capital LTD.</div></div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon"><i class="fab fa-google"></i></div>
+      <div><div class="cert-name">Python Automation</div><div class="cert-issuer">Google</div></div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon"><i class="fas fa-users"></i></div>
+      <div><div class="cert-name">Effective Teamwork & Public Speaking</div><div class="cert-issuer">BYLCx</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DOWNLOAD SECTION -->
+<section class="section" id="download">
+  <div class="download-section reveal">
+    <div class="download-text">
+      <h3>Download My Documents</h3>
+      <p>Get my full CV with complete details, or a concise resume — both professionally formatted and print-ready.</p>
+    </div>
+    <div class="download-btns">
+      <button class="btn btn-download" id="generateCvBtn">
+        <i class="fas fa-file-pdf"></i> Download Full CV
+      </button>
+      <button class="btn btn-download2" id="generateResumeBtn">
+        <i class="fas fa-file-alt"></i> Download Resume
       </button>
     </div>
-  </nav>
+  </div>
+  <p id="dl-msg" style="color:var(--muted);font-size:11px;font-family:var(--mono);margin-top:1rem;display:none;text-align:center;">⚡ Generating your document... this may take a moment.</p>
+</section>
 
-  <main>
-    <section class="hero" id="home">
-      <div class="container hero-grid">
-        <div>
-          <div class="hero-eyebrow">Dhaka, Bangladesh | Est. 2019</div>
-          <h1>Abu <span>Sayed</span></h1>
+<div class="divider"></div>
 
-          <div class="type-row">
-            <span class="type-label">Currently building:</span>
-            <div class="typing" id="typingText"></div>
-          </div>
-
-          <p class="hero-copy">
-            Multi-disciplinary full stack developer, AI engineer, Unity VR builder, and music creator. I build AI-powered SaaS products, real-time systems, VR experiences, and production-ready web applications used by global teams.
-          </p>
-
-          <div class="hero-chips">
-            <span>Laravel</span>
-            <span>React / Next.js</span>
-            <span>OpenAI Integration</span>
-            <span>Unity VR</span>
-            <span>AWS & CI/CD</span>
-          </div>
-
-          <div class="actions">
-            <a href="#projects" class="btn btn-primary"><i class="fas fa-code"></i> View Work</a>
-            <a href="#contact" class="btn btn-secondary"><i class="fas fa-envelope"></i> Hire Me</a>
-            <button class="btn btn-voice" id="speakBtn"><i class="fas fa-volume-high"></i> Speak Intro</button>
-            <button class="btn btn-secondary" id="stopSpeakBtn"><i class="fas fa-stop"></i> Stop Voice</button>
-          </div>
-        </div>
-
-        <div class="hero-visual reveal">
-          <div class="portrait-shell">
-            <div class="portrait-card">
-              <img src="https://abusayed.com.bd/wp-content/uploads/2021/09/Abu-Sayed.png" alt="Abu Sayed">
-            </div>
-
-            <div class="corner-bl"></div>
-            <div class="corner-tr"></div>
-
-            <div class="hero-stats">
-              <strong class="counter" data-target="50">0</strong>
-              <span>Projects Delivered</span>
-            </div>
-
-            <div class="hero-badge">
-              Available for freelance,<br>contract and full-time
-            </div>
-
-            <div class="floating-chip chip-a">AI SaaS Systems</div>
-            <div class="floating-chip chip-b">Unity VR Builder</div>
-            <div class="floating-chip chip-c">OpenAI + Laravel</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container stats-grid reveal">
-        <div class="stat-box">
-          <h3 class="counter" data-target="5">0</h3>
-          <p>Years Experience</p>
-        </div>
-        <div class="stat-box">
-          <h3 class="counter" data-target="50">0</h3>
-          <p>Projects Delivered</p>
-        </div>
-        <div class="stat-box">
-          <h3 class="counter" data-target="92">0</h3>
-          <p>AI Matching Accuracy</p>
-        </div>
-        <div class="stat-box">
-          <h3 class="counter" data-target="15">0</h3>
-          <p>Inventory Cost Reduction</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="about">
-      <div class="container">
-        <div class="section-kicker">Profile</div>
-        <h2 class="section-title">Who Is <em>Abu Sayed?</em></h2>
-        <div class="about-grid">
-          <div class="card reveal">
-            <div class="terminal">
-              <div><span class="key">name</span>: <span class="str">"Abu Sayed"</span></div>
-              <div><span class="key">location</span>: <span class="str">"Dhaka, Bangladesh"</span></div>
-              <div><span class="key">email</span>: <span class="str">"hi@abusayed.com.bd"</span></div>
-              <div><span class="key">roles</span>: <span class="val">["Full Stack Developer","AI Engineer","Unity VR Dev","AWS-focused Builder"]</span></div>
-              <div><span class="key">experience</span>: <span class="num">5+</span> years</div>
-              <div><span class="key">projects</span>: <span class="num">50+</span> delivered worldwide</div>
-              <div><span class="key">status</span>: <span class="val">"Open to remote work"</span></div>
-            </div>
-          </div>
-
-          <div class="card reveal contact-card">
-            <h3 style="font-family:var(--heading);font-size:1.35rem;margin-bottom:12px;">Short Intro</h3>
-            <p>
-              I focus on practical product engineering: backend systems, frontend experience, AI workflows, cloud deployment, and business-impact features. I also work across music-tech and immersive digital experiences, which gives my portfolio a different edge than standard developer sites.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="skills">
-      <div class="container">
-        <div class="section-kicker">Arsenal</div>
-        <h2 class="section-title">Core <em>Stack</em></h2>
-        <div class="skills-grid">
-          <div class="card skill-card tilt-card reveal">
-            <h3>Web & SaaS</h3>
-            <p style="margin-bottom:16px;">Production-ready applications, APIs, admin systems, dashboards, and scalable business products.</p>
-            <div class="skill-tags">
-              <span>Laravel</span><span>React</span><span>Next.js</span><span>Livewire</span><span>Node.js</span><span>MySQL</span><span>PostgreSQL</span>
-            </div>
-          </div>
-
-          <div class="card skill-card tilt-card reveal">
-            <h3>AI & Data</h3>
-            <p style="margin-bottom:16px;">LLM integrations, voice workflows, automation, matching logic, analytics and forecasting.</p>
-            <div class="skill-tags">
-              <span>OpenAI API</span><span>Whisper</span><span>Python</span><span>Pandas</span><span>Scikit-learn</span><span>Prompt Design</span>
-            </div>
-          </div>
-
-          <div class="card skill-card tilt-card reveal">
-            <h3>Cloud & DevOps</h3>
-            <p style="margin-bottom:16px;">Deployment, performance, CI/CD, observability, and operations that stay stable in production.</p>
-            <div class="skill-tags">
-              <span>AWS</span><span>Docker</span><span>Jenkins</span><span>Linux</span><span>Nginx</span><span>Terraform</span>
-            </div>
-          </div>
-
-          <div class="card skill-card tilt-card reveal">
-            <h3>Mobile & XR</h3>
-            <p style="margin-bottom:16px;">Cross-platform apps, Unity-based immersive systems, and interactive product experiences.</p>
-            <div class="skill-tags">
-              <span>Flutter</span><span>React Native</span><span>Unity3D</span><span>C#</span><span>VR Systems</span><span>iOS / Android</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="experience">
-      <div class="container">
-        <div class="section-kicker">Journey</div>
-        <h2 class="section-title">Professional <em>Experience</em></h2>
-
-        <div class="timeline-grid">
-          <div class="card timeline-card reveal">
-            <small>May 2024 - Present</small>
-            <h3>AI Trainer @ University of Frontier Technology</h3>
-            <p>Teaching AI and web development to final-year students, including OpenAI API integration, voice AI systems, and SDLC workflows in a practical academic-industry setup.</p>
-          </div>
-
-          <div class="card timeline-card reveal">
-            <small>May 2024 - Present</small>
-            <h3>Lead Full Stack Developer @ Aesthetic Code Lab</h3>
-            <p>Built AI job matching, Unity VR components, video conferencing workflows, and zero-downtime deployment pipelines for real production systems.</p>
-          </div>
-
-          <div class="card timeline-card reveal">
-            <small>March 2021 - April 2024</small>
-            <h3>Business Data Analyst @ Otto Spinning Ltd.</h3>
-            <p>Delivered forecasting and dashboard systems that improved decision-making, data accuracy, production efficiency, and inventory cost control.</p>
-          </div>
-
-          <div class="card timeline-card reveal">
-            <small>2019 - 2022</small>
-            <h3>Freelance Web Developer</h3>
-            <p>Delivered 50+ custom websites and business systems for international clients using PHP, WordPress, e-commerce stacks, and hosting/security management.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="projects">
-      <div class="container">
-        <div class="section-kicker">Portfolio</div>
-        <h2 class="section-title">Featured <em>Projects</em></h2>
-
-        <div class="projects-grid">
-          <div class="card project-card tilt-card reveal">
-            <h3>Ryugaku Mensetsu System</h3>
-            <p>AI-powered Japanese language testing platform with proctoring, automated voice evaluation, and identity verification.</p>
-            <div class="project-tags" style="margin-top:16px;">
-              <span>Laravel</span><span>Whisper</span><span>WebRTC</span><span>Livewire</span>
-            </div>
-            <div class="project-links">
-              <a href="https://rms-dev.a-cloud.tech/" target="_blank">Live Demo</a>
-            </div>
-          </div>
-
-          <div class="card project-card tilt-card reveal">
-            <h3>TOKUTEI GINOU GAKKO App</h3>
-            <p>Production-grade learning app for iOS and Android with Laravel backend, Flutter frontend, Apple Pay, and AWS deployment flow.</p>
-            <div class="project-tags" style="margin-top:16px;">
-              <span>Flutter</span><span>Laravel</span><span>AWS</span><span>Docker</span>
-            </div>
-            <div class="project-links">
-              <a href="https://play.google.com/store/apps/details?id=tokyo.tgg.stepup" target="_blank">Play Store</a>
-              <a href="https://apps.apple.com/mn/app/tokutei-ginou-gakko/id6747668375" target="_blank">App Store</a>
-            </div>
-          </div>
-
-          <div class="card project-card tilt-card reveal">
-            <h3>AI Job Matching + Unity VR</h3>
-            <p>Enterprise platform with AI-powered job matching and Unity-based avatar customization for virtual employee engagement.</p>
-            <div class="project-tags" style="margin-top:16px;">
-              <span>OpenAI</span><span>Laravel</span><span>Unity3D</span><span>C#</span>
-            </div>
-            <div class="project-links">
-              <a href="https://japanskill.work" target="_blank">Live Demo</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact">
-      <div class="container">
-        <div class="section-kicker">Connect</div>
-        <h2 class="section-title">Let’s <em>Work</em> Together</h2>
-
-        <div class="contact-grid">
-          <div class="card reveal">
-            <p class="section-copy" style="max-width:none;">
-              Available for remote work, contract roles, full-time engineering positions, and product collaborations. Fastest response channel is email or WhatsApp.
-            </p>
-
-            <div class="contact-list">
-              <a class="contact-item" href="mailto:hi@abusayed.com.bd">
-                <i class="fas fa-envelope"></i>
-                <span>hi@abusayed.com.bd</span>
-              </a>
-              <a class="contact-item" href="tel:+8801925785462">
-                <i class="fas fa-phone"></i>
-                <span>+8801925785462</span>
-              </a>
-              <a class="contact-item" href="https://abusayed.com.bd" target="_blank">
-                <i class="fas fa-globe"></i>
-                <span>abusayed.com.bd</span>
-              </a>
-              <a class="contact-item" href="https://github.com/ImAbuSayed" target="_blank">
-                <i class="fab fa-github"></i>
-                <span>github.com/ImAbuSayed</span>
-              </a>
-            </div>
-          </div>
-
-          <div class="card reveal">
-            <h3 style="font-family:var(--heading);font-size:1.35rem;margin-bottom:12px;">Quick Pitch</h3>
-            <p>
-              If you need one person who can think across product, backend, frontend, AI, deployment, and user experience without making the site feel generic, this portfolio direction fits that positioning.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      <p>&copy; 2026 Abu Sayed | Full Stack Developer | AI Engineer | Unity VR</p>
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-label">Get in Touch</div>
+  <h2 class="section-title">Let's <em>Connect</em></h2>
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <a href="tel:+8801925785462" class="contact-item">
+        <span class="contact-icon"><i class="fas fa-phone"></i></span>
+        <div><div class="contact-label">Phone / WhatsApp</div><div class="contact-val">+8801925785462</div></div>
+      </a>
+      <a href="mailto:hi@abusayed.com.bd" class="contact-item">
+        <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+        <div><div class="contact-label">Email</div><div class="contact-val">hi@abusayed.com.bd</div></div>
+      </a>
+      <a href="https://abusayed.com.bd" target="_blank" class="contact-item">
+        <span class="contact-icon"><i class="fas fa-globe"></i></span>
+        <div><div class="contact-label">Portfolio Website</div><div class="contact-val">abusayed.com.bd</div></div>
+      </a>
+      <a href="https://abu-sayed.medium.com/" target="_blank" class="contact-item">
+        <span class="contact-icon"><i class="fab fa-medium"></i></span>
+        <div><div class="contact-label">Blog</div><div class="contact-val">abu-sayed.medium.com</div></div>
+      </a>
+      <a href="https://buymeacoffee.com/imsayed/commissions/21663" target="_blank" class="contact-item">
+        <span class="contact-icon">☕</span>
+        <div><div class="contact-label">Hire Me / Commission</div><div class="contact-val">buymeacoffee.com/imsayed</div></div>
+      </a>
     </div>
-  </footer>
+    <div class="reveal">
+      <h3 style="font-family:var(--heading-font);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:1rem;">Social & Professional</h3>
+      <div class="social-grid">
+        <a href="https://bd.linkedin.com/in/imabusayed" target="_blank" class="social-item"><i class="fab fa-linkedin" style="color:#0077b5;"></i> LinkedIn</a>
+        <a href="https://github.com/ImAbuSayed" target="_blank" class="social-item"><i class="fab fa-github"></i> GitHub</a>
+        <a href="https://abu-sayed.medium.com/" target="_blank" class="social-item"><i class="fab fa-medium"></i> Medium</a>
+        <a href="https://facebook.com/AbuSayed.TheCultOfPersonality" target="_blank" class="social-item"><i class="fab fa-facebook" style="color:#1877f2;"></i> Facebook</a>
+        <a href="https://open.spotify.com/artist/6vnjuWLcV3nHwIFeozztMv" target="_blank" class="social-item"><i class="fab fa-spotify" style="color:#1db954;"></i> Spotify</a>
+        <a href="https://music.apple.com/ae/artist/abu-sayed/1622976966" target="_blank" class="social-item"><i class="fab fa-apple" style="color:#fc3c44;"></i> Apple Music</a>
+      </div>
+      <div style="margin-top:2rem;background:rgba(0,210,106,0.04);border:1px solid var(--border);padding:1.25rem;border-radius:4px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--accent);margin-bottom:0.5rem;">// availability</div>
+        <p style="font-size:12px;color:var(--muted);">Available for <strong style="color:var(--text);">Remote Work</strong>, Freelance, Contract, and Full-Time roles worldwide. Response time: within 24 hours.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <script>
-    const cursor = document.getElementById("cursor");
-    const cursorRing = document.getElementById("cursorRing");
-    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Abu Sayed · Built with passion in Dhaka, Bangladesh 🇧🇩 · Available for Remote Work Worldwide 🌍</p>
+  <p style="margin-top:0.5rem;font-size:10px;">Full Stack Developer · AI Engineer · Unity VR · AWS Expert · Musician</p>
+</footer>
 
-    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-      document.addEventListener("mousemove", (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        cursor.style.left = mouseX + "px";
-        cursor.style.top = mouseY + "px";
-      });
+<script>
+// ===== CURSOR =====
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX; my=e.clientY;
+  cursor.style.left=mx+'px';
+  cursor.style.top=my+'px';
+});
+function animRing(){
+  rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
+  cursorRing.style.left=rx+'px';
+  cursorRing.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+document.querySelectorAll('a,button,.project-card,.tech-tag,.social-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{
+    cursor.style.width='20px';cursor.style.height='20px';
+    cursorRing.style.width='52px';cursorRing.style.height='52px';
+  });
+  el.addEventListener('mouseleave',()=>{
+    cursor.style.width='12px';cursor.style.height='12px';
+    cursorRing.style.width='36px';cursorRing.style.height='36px';
+  });
+});
 
-      function animateRing() {
-        ringX += (mouseX - ringX) * 0.16;
-        ringY += (mouseY - ringY) * 0.16;
-        cursorRing.style.left = ringX + "px";
-        cursorRing.style.top = ringY + "px";
-        requestAnimationFrame(animateRing);
-      }
-      animateRing();
+// ===== CANVAS BACKGROUND =====
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight;}
+resize();
+window.addEventListener('resize',resize);
 
-      document.querySelectorAll("a, button, .tilt-card").forEach((el) => {
-        el.addEventListener("mouseenter", () => {
-          cursor.style.transform = "translate(-50%,-50%) scale(1.8)";
-          cursorRing.style.width = "52px";
-          cursorRing.style.height = "52px";
-        });
-        el.addEventListener("mouseleave", () => {
-          cursor.style.transform = "translate(-50%,-50%) scale(1)";
-          cursorRing.style.width = "34px";
-          cursorRing.style.height = "34px";
-        });
-      });
-    }
-
-    const canvas = document.getElementById("bg-canvas");
-    const ctx = canvas.getContext("2d");
-    let particles = [];
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      particles = Array.from({ length: 70 }, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.35,
-        vy: (Math.random() - 0.5) * 0.35,
-        size: Math.random() * 2 + 0.6
-      }));
-    }
-
-    function drawCanvas() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      for (const p of particles) {
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
-
+// Particle field
+const particles=[];
+for(let i=0;i<80;i++){
+  particles.push({
+    x:Math.random()*innerWidth,
+    y:Math.random()*innerHeight,
+    vx:(Math.random()-0.5)*0.3,
+    vy:(Math.random()-0.5)*0.3,
+    size:Math.random()*1.5+0.5,
+    alpha:Math.random()*0.5+0.1
+  });
+}
+function drawCanvas(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  // Grid lines
+  ctx.strokeStyle='rgba(0,210,106,0.04)';
+  ctx.lineWidth=1;
+  const gridSize=80;
+  for(let x=0;x<canvas.width;x+=gridSize){
+    ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,canvas.height);ctx.stroke();
+  }
+  for(let y=0;y<canvas.height;y+=gridSize){
+    ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(canvas.width,y);ctx.stroke();
+  }
+  // Particles
+  particles.forEach(p=>{
+    p.x+=p.vx; p.y+=p.vy;
+    if(p.x<0)p.x=canvas.width;
+    if(p.x>canvas.width)p.x=0;
+    if(p.y<0)p.y=canvas.height;
+    if(p.y>canvas.height)p.y=0;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    ctx.fillStyle=`rgba(0,210,106,${p.alpha})`;
+    ctx.fill();
+  });
+  // Connections
+  particles.forEach((p,i)=>{
+    particles.slice(i+1).forEach(p2=>{
+      const d=Math.hypot(p.x-p2.x,p.y-p2.y);
+      if(d<120){
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(0,210,106,0.45)";
-        ctx.fill();
+        ctx.moveTo(p.x,p.y);ctx.lineTo(p2.x,p2.y);
+        ctx.strokeStyle=`rgba(0,210,106,${0.06*(1-d/120)})`;
+        ctx.lineWidth=0.5;
+        ctx.stroke();
       }
+    });
+  });
+  requestAnimationFrame(drawCanvas);
+}
+drawCanvas();
 
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.hypot(dx, dy);
-
-          if (dist < 120) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(0,230,255,${0.08 * (1 - dist / 120)})`;
-            ctx.lineWidth = 0.8;
-            ctx.stroke();
-          }
-        }
-      }
-
-      requestAnimationFrame(drawCanvas);
+// ===== SCROLL REVEAL =====
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('visible'),i*80);
     }
+  });
+},{threshold:0.1});
+reveals.forEach(r=>obs.observe(r));
 
-    resizeCanvas();
-    drawCanvas();
-    window.addEventListener("resize", resizeCanvas);
+// ===== NAV SCROLL =====
+window.addEventListener('scroll',()=>{
+  const nav=document.getElementById('navbar');
+  if(scrollY>50){
+    nav.style.padding='0.6rem 2rem';
+  }else{
+    nav.style.padding='1rem 2rem';
+  }
+});
 
-    const roles = [
-      "AI-powered SaaS platforms",
-      "Laravel + React production systems",
-      "Unity VR interactive experiences",
-      "Cloud-ready web applications",
-      "Voice and real-time workflows"
-    ];
+// ===== GENERATE FULL CV =====
+function generateAndDownloadCV(type){
+  const dlMsg=document.getElementById('dl-msg');
+  dlMsg.style.display='block';
+  const isResume = type==='resume';
 
-    const typingEl = document.getElementById("typingText");
-    let roleIndex = 0;
-    let charIndex = 0;
-    let deleting = false;
+  setTimeout(()=>{
+    const html = isResume ? buildResume() : buildCV();
+    const blob = new Blob([html],{type:'text/html'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download = isResume ? 'Abu_Sayed_Resume.html' : 'Abu_Sayed_CV.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    dlMsg.style.display='none';
+    dlMsg.textContent='✅ Downloaded! Open the file in your browser and use browser Print → Save as PDF for best results.';
+    dlMsg.style.display='block';
+    dlMsg.style.color='var(--accent)';
+    setTimeout(()=>{dlMsg.style.display='none';},6000);
+  },200);
+}
 
-    function typeLoop() {
-      const current = roles[roleIndex];
-      typingEl.textContent = deleting
-        ? current.slice(0, charIndex--)
-        : current.slice(0, charIndex++);
+document.getElementById('generateCvBtn').addEventListener('click',()=>generateAndDownloadCV('cv'));
+document.getElementById('generateResumeBtn').addEventListener('click',()=>generateAndDownloadCV('resume'));
+document.getElementById('dlCvBtn').addEventListener('click',e=>{e.preventDefault();generateAndDownloadCV('cv');});
+document.getElementById('dlResumeBtn').addEventListener('click',e=>{e.preventDefault();generateAndDownloadCV('resume');});
 
-      if (!deleting && charIndex === current.length + 1) {
-        deleting = true;
-        setTimeout(typeLoop, 1100);
-        return;
-      }
+function buildCV(){
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Abu Sayed — Full CV</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;font-size:11pt;color:#1a1a2e;background:#fff;line-height:1.6;}
+.page{max-width:210mm;margin:0 auto;padding:15mm 18mm;background:#fff;}
+@media print{.page{padding:10mm 15mm;}body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
+/* HEADER */
+.header{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:2px solid #00d26a;}
+.h-name{font-size:28pt;font-weight:700;letter-spacing:-0.03em;color:#050f08;line-height:1;}
+.h-title{font-size:11pt;color:#00875a;font-weight:500;margin-top:4px;}
+.h-contact{text-align:right;font-size:9pt;color:#555;line-height:1.8;}
+.h-contact a{color:#00875a;text-decoration:none;}
+/* SECTION */
+.section{margin-bottom:1.5rem;}
+.section-title{font-size:10pt;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#00875a;border-bottom:1px solid #e0f7ea;padding-bottom:4px;margin-bottom:0.75rem;}
+/* OBJECTIVE */
+.objective{font-size:10.5pt;color:#333;font-style:italic;}
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.5rem;}
+.skill-group p{font-size:9.5pt;color:#444;margin-bottom:2px;}
+.skill-group strong{color:#050f08;font-size:10pt;}
+/* EXPERIENCE */
+.exp-item{margin-bottom:1rem;padding-left:0.75rem;border-left:2px solid #e0f7ea;}
+.exp-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px;}
+.exp-role{font-weight:600;font-size:11pt;color:#050f08;}
+.exp-co{color:#00875a;}
+.exp-date{font-size:9pt;color:#777;font-family:'JetBrains Mono',monospace;}
+.exp-loc{font-size:9pt;color:#999;margin-bottom:4px;}
+.exp-bullets{padding-left:1rem;}
+.exp-bullets li{font-size:9.5pt;color:#444;margin-bottom:2px;}
+/* PROJECTS */
+.proj-item{margin-bottom:1rem;padding:0.6rem 0.75rem;background:#f8fffe;border-left:2px solid #00d26a;}
+.proj-name{font-weight:600;font-size:10.5pt;color:#050f08;}
+.proj-role{font-size:9pt;color:#00875a;margin-bottom:3px;}
+.proj-desc{font-size:9.5pt;color:#444;margin-bottom:4px;}
+.proj-link{font-size:9pt;color:#00875a;font-family:'JetBrains Mono',monospace;}
+/* EDUCATION */
+.edu-item{display:grid;grid-template-columns:1fr auto;gap:1rem;margin-bottom:0.75rem;padding-bottom:0.75rem;border-bottom:1px solid #f0f0f0;}
+.edu-degree{font-weight:600;font-size:10.5pt;color:#050f08;}
+.edu-inst{font-size:9.5pt;color:#555;}
+/* CERTS */
+.cert-list{columns:2;gap:1.5rem;}
+.cert-list li{font-size:9.5pt;color:#444;margin-bottom:4px;break-inside:avoid;}
+/* PERSONAL */
+.personal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.5rem;}
+.personal-grid p{font-size:9.5pt;color:#444;}
+.personal-grid strong{color:#050f08;}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="header">
+  <div>
+    <div class="h-name">Abu Sayed</div>
+    <div class="h-title">Full Stack Developer · AI Engineer · Unity VR · AWS Expert · Musician</div>
+  </div>
+  <div class="h-contact">
+    📍 Dhaka, Bangladesh · Remote Worldwide<br>
+    📞 <a href="tel:+8801925785462">+8801925785462</a><br>
+    ✉️ <a href="mailto:hi@abusayed.com.bd">hi@abusayed.com.bd</a><br>
+    🌐 <a href="https://abusayed.com.bd">abusayed.com.bd</a><br>
+    💼 <a href="https://bd.linkedin.com/in/imabusayed">linkedin.com/in/imabusayed</a><br>
+    🐙 <a href="https://github.com/ImAbuSayed">github.com/ImAbuSayed</a>
+  </div>
+</div>
 
-      if (deleting && charIndex === 0) {
-        deleting = false;
-        roleIndex = (roleIndex + 1) % roles.length;
-      }
+<div class="section">
+  <div class="section-title">Career Objective</div>
+  <p class="objective">Ambitious IT professional with 5+ years of experience in full stack web development, AI integration, Unity VR development, cloud infrastructure, and data analytics. Delivered 50+ projects worldwide for startups, agencies, and enterprises. Seeking challenging roles that leverage expertise in Laravel, React, OpenAI API, AWS, and Unity3D to build scalable digital products that make a real difference.</p>
+</div>
 
-      setTimeout(typeLoop, deleting ? 35 : 65);
-    }
-    typeLoop();
+<div class="section">
+  <div class="section-title">Core Skills</div>
+  <div class="skills-grid">
+    <div class="skill-group"><strong>Web & Backend</strong><p>PHP · Laravel · React · Next.js · Livewire · Node.js · GraphQL · WebSockets · WordPress · MySQL · PostgreSQL · MongoDB · Redis</p></div>
+    <div class="skill-group"><strong>AI & Machine Learning</strong><p>OpenAI API (GPT-4, Whisper) · LLM Fine-Tuning · TensorFlow · PyTorch · Scikit-learn · Pandas · NumPy · Tableau · Power BI</p></div>
+    <div class="skill-group"><strong>Cloud & DevOps</strong><p>AWS · Google Cloud · Azure · Docker · Kubernetes · Jenkins · Terraform · Ansible · ELK Stack · Linux · Nginx · CCNA · MikroTik</p></div>
+    <div class="skill-group"><strong>Mobile & VR</strong><p>Unity3D · C# · Flutter · React Native · Dart · Android · iOS · Apple Pay · VR Avatar Systems</p></div>
+  </div>
+</div>
 
-    const navToggle = document.getElementById("navToggle");
-    const navLinks = document.getElementById("navLinks");
-    navToggle.addEventListener("click", () => {
-      navLinks.classList.toggle("open");
-    });
+<div class="section">
+  <div class="section-title">Professional Experience</div>
 
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => navLinks.classList.remove('open'));
-    });
+  <div class="exp-item">
+    <div class="exp-header">
+      <span class="exp-role">AI Trainer <span class="exp-co">@ University of Frontier Technology (via Aesthetic Code Lab)</span></span>
+      <span class="exp-date">May 2024 – Present</span>
+    </div>
+    <div class="exp-loc">Kaliakair, Gazipur, Bangladesh · Contract</div>
+    <ul class="exp-bullets">
+      <li>Teaching AI and Web Application Development to final-year IoT & Robotics Engineering students</li>
+      <li>Leading hands-on workshops on OpenAI API integration with PHP & Laravel</li>
+      <li>Delivering specialized training on AI Voice-to-Voice chatbot development</li>
+      <li>Designing course materials, evaluating Capstone Projects, and mentoring on enterprise SDLC workflows</li>
+      <li>Part of tri-party MoU between ACL, Tokyo Gogaku Gakko (Japan), and the university</li>
+    </ul>
+  </div>
 
-    const revealEls = document.querySelectorAll(".reveal");
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) entry.target.classList.add("visible");
-      });
-    }, { threshold: 0.15 });
+  <div class="exp-item">
+    <div class="exp-header">
+      <span class="exp-role">Full Stack Developer (Lead) <span class="exp-co">@ Aesthetic Code Lab</span></span>
+      <span class="exp-date">May 2024 – Present</span>
+    </div>
+    <div class="exp-loc">Dhaka, Bangladesh</div>
+    <ul class="exp-bullets">
+      <li>Built Unity VR integration with C# for real-time employee avatar customization (VR Employment System)</li>
+      <li>Engineered AI-powered job matching system achieving 92% accuracy using OpenAI API + Laravel — 500+ users</li>
+      <li>Implemented real-time video conferencing via Jitsi Meet SDK and Zoom API</li>
+      <li>Deployed zero-downtime production systems on AWS with Jenkins CI/CD pipelines</li>
+      <li>Developed and maintained high-performance Laravel, Livewire, React applications serving global traffic</li>
+      <li>Integrated third-party APIs, audio/video calling systems, and live streaming features</li>
+    </ul>
+  </div>
 
-    revealEls.forEach(el => revealObserver.observe(el));
+  <div class="exp-item">
+    <div class="exp-header">
+      <span class="exp-role">Business Data Analyst <span class="exp-co">@ Otto Spinning Ltd.</span></span>
+      <span class="exp-date">March 2021 – April 2024</span>
+    </div>
+    <div class="exp-loc">Gazipur, Bangladesh</div>
+    <ul class="exp-bullets">
+      <li>Built C-suite dashboards with Tableau and Power BI from complex production & supply-chain data</li>
+      <li>Developed ML-based yarn demand forecasting model → 15% reduction in excess inventory costs</li>
+      <li>Optimized production scheduling process → 10% increase in overall efficiency</li>
+      <li>Implemented data governance frameworks → 20% improvement in data accuracy</li>
+    </ul>
+  </div>
 
-    const counters = document.querySelectorAll(".counter");
-    const counterObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
+  <div class="exp-item">
+    <div class="exp-header">
+      <span class="exp-role">Founder & CTO <span class="exp-co">@ Ai Blogify · Trading Now · ToolsNess</span></span>
+      <span class="exp-date">Nov 2021 – Feb 2024</span>
+    </div>
+    <ul class="exp-bullets">
+      <li>Architected and scaled multiple AI-powered SaaS products and internal tools</li>
+      <li>Managed VPS servers, firewalls, DNS, web stacks, and high-traffic scaling infrastructure</li>
+      <li>Advanced SEO implementation (Semrush, Google Search Console, Google Keyword Planner)</li>
+      <li>Ran Google Ads and Facebook Ads campaigns for organic and paid traffic growth</li>
+    </ul>
+  </div>
 
-        const el = entry.target;
-        const target = Number(el.dataset.target);
-        let current = 0;
-        const step = Math.max(1, Math.ceil(target / 40));
+  <div class="exp-item">
+    <div class="exp-header">
+      <span class="exp-role">Top-Rated Freelance Web Developer</span>
+      <span class="exp-date">2019 – 2022</span>
+    </div>
+    <ul class="exp-bullets">
+      <li>Delivered 50+ custom WordPress and PHP/MySQL websites for international clients</li>
+      <li>Built secure e-commerce platforms with full hosting, maintenance & cybersecurity management</li>
+      <li>Consistent on-time, within-budget delivery across regions worldwide</li>
+    </ul>
+  </div>
 
-        const timer = setInterval(() => {
-          current += step;
-          if (current >= target) {
-            current = target;
-            clearInterval(timer);
-          }
-          el.textContent = current + (target >= 50 || target === 5 ? "+" : "%");
-          if (target === 50) el.textContent = current + "+";
-          if (target === 5) el.textContent = current + "+";
-          if (target === 92 || target === 15) el.textContent = current + "%";
-        }, 35);
+  <div class="exp-item">
+    <div class="exp-header">
+      <span class="exp-role">Volunteer <span class="exp-co">@ Quantum Foundation</span></span>
+      <span class="exp-date">2012 – 2015</span>
+    </div>
+    <ul class="exp-bullets">
+      <li>Organized blood donation drives, charity events, and community support programs at Mirpur, Dhaka</li>
+    </ul>
+  </div>
+</div>
 
-        counterObserver.unobserve(el);
-      });
-    }, { threshold: 0.5 });
+<div class="section">
+  <div class="section-title">Featured Projects</div>
+  <div class="proj-item">
+    <div class="proj-name">Ryūgaku Mensetsu System — AI Japanese Test Platform</div>
+    <div class="proj-role">Lead Architect & Full Stack Developer · Tokyo Gogaku Gakko, Japan</div>
+    <div class="proj-desc">AI-powered Japanese language proficiency test platform with OpenAI Whisper API voice recognition, camera-based identity verification, and live proctoring. Achieved 70% reduction in manual evaluation time.</div>
+    <div class="proj-link">Stack: TALL Stack · Laravel · Livewire · OpenAI Whisper · WebRTC | Live: rms-dev.a-cloud.tech</div>
+  </div>
+  <div class="proj-item">
+    <div class="proj-name">TOKUTEI GINOU GAKKO — Japanese Learning Mobile App</div>
+    <div class="proj-role">Full Stack Mobile Developer · Tokyo Gogaku Gakko, Japan</div>
+    <div class="proj-desc">Production-grade mobile learning app available on iOS (App Store) and Android (Play Store) with Apple Pay integration, Laravel REST API backend, and AWS+Docker+Jenkins deployment.</div>
+    <div class="proj-link">Stack: Laravel · Flutter/Dart · MySQL · Apple Pay · AWS · Docker · Jenkins</div>
+  </div>
+  <div class="proj-item">
+    <div class="proj-name">AI Job Matching System + Unity VR Employment Platform</div>
+    <div class="proj-role">Full Stack + VR Developer · 500+ employees onboarded</div>
+    <div class="proj-desc">Enterprise employment management with AI job matching at 92% accuracy using OpenAI API + Laravel, and Unity3D VR avatar customization for virtual employee engagement.</div>
+    <div class="proj-link">Stack: Laravel · Livewire · OpenAI API · Unity3D · C# · MySQL | Live: japanskill.work</div>
+  </div>
+  <div class="proj-item">
+    <div class="proj-name">ChatLab AI — Cross-Platform AI Chat App</div>
+    <div class="proj-role">Mobile Developer</div>
+    <div class="proj-desc">AI-powered conversational assistant for Android built with React Native and Expo. Published on Google Play Store.</div>
+    <div class="proj-link">Stack: React Native · Expo · JavaScript · OpenAI API</div>
+  </div>
+</div>
 
-    counters.forEach(el => counterObserver.observe(el));
+<div class="section">
+  <div class="section-title">Education</div>
+  <div class="edu-item"><div><div class="edu-degree">Bachelor of Science (BSc.) — Computer Science & Engineering</div><div class="edu-inst">Bangladesh Institute of Science and Technology, Dhaka</div></div></div>
+  <div class="edu-item"><div><div class="edu-degree">Higher Secondary School Certificate (HSC) — Science</div><div class="edu-inst">Govt. Bangla College, Dhaka</div></div></div>
+  <div class="edu-item"><div><div class="edu-degree">Secondary School Certificate (SSC) — Science</div><div class="edu-inst">Govt Science College Attached High School, Dhaka</div></div></div>
+</div>
 
-    const tiltCards = document.querySelectorAll(".tilt-card");
-    tiltCards.forEach(card => {
-      card.addEventListener("mousemove", (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const rx = ((y / rect.height) - 0.5) * -8;
-        const ry = ((x / rect.width) - 0.5) * 10;
-        card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`;
-      });
+<div class="section">
+  <div class="section-title">Certifications</div>
+  <ul class="cert-list">
+    <li>Cisco Certified Network Associate (CCNA) — PeopleNTech</li>
+    <li>MikroTik Configuration Training — PeopleNTech</li>
+    <li>DevOps Training — Interactive Care</li>
+    <li>Server Administration incl. Windows Server — BASIS / SEIP / PeopleNTech</li>
+    <li>Professional English Communication — WSDA New Zealand</li>
+    <li>Fundamental Analysis of Stock Market — Royale Capital LTD.</li>
+    <li>Python Automation — Google</li>
+    <li>Effective Teamwork — BYLCx</li>
+    <li>Public Speaking — BYLCx</li>
+  </ul>
+</div>
 
-      card.addEventListener("mouseleave", () => {
-        card.style.transform = "";
-      });
-    });
+<div class="section">
+  <div class="section-title">Additional</div>
+  <div class="personal-grid">
+    <p><strong>Date of Birth:</strong> 26th December</p>
+    <p><strong>Languages:</strong> English (Fluent), Bangla (Native)</p>
+    <p><strong>Interests:</strong> Emerging Technology, AI Research, Podcasts, Music Production, Gaming</p>
+    <p><strong>Music:</strong> Recording artist & songwriter · Founder of music record label · Creator of 3D Music Virtual City</p>
+    <p><strong>Availability:</strong> Remote, Freelance, Contract, Full-Time · Worldwide</p>
+    <p><strong>Website:</strong> abusayed.com.bd | <strong>Blog:</strong> abu-sayed.medium.com</p>
+  </div>
+</div>
+</div>
+<script>window.print();<\/script>
+</body></html>`;
+}
 
-    const sections = document.querySelectorAll("section[id]");
-    const navItems = document.querySelectorAll(".nav-link");
-    const progressBar = document.getElementById("progressBar");
+function buildResume(){
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Abu Sayed — Resume</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;font-size:10.5pt;color:#1a1a2e;background:#fff;line-height:1.55;}
+.page{max-width:210mm;margin:0 auto;padding:12mm 16mm;background:#fff;}
+@media print{.page{padding:8mm 12mm;}body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
+.header{margin-bottom:1.2rem;padding-bottom:1rem;border-bottom:2px solid #00d26a;}
+.h-name{font-size:24pt;font-weight:700;letter-spacing:-0.03em;color:#050f08;}
+.h-title{font-size:10pt;color:#00875a;font-weight:500;margin:3px 0 6px;}
+.h-contact{display:flex;flex-wrap:wrap;gap:1.2rem;font-size:9pt;color:#555;}
+.h-contact a{color:#00875a;text-decoration:none;}
+.section{margin-bottom:1.2rem;}
+.section-title{font-size:9pt;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#00875a;border-bottom:1px solid #e0f7ea;padding-bottom:3px;margin-bottom:0.6rem;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;}
+.skill-block p{font-size:9pt;color:#444;}
+.skill-block strong{font-size:9.5pt;color:#050f08;display:block;margin-bottom:1px;}
+.exp-item{margin-bottom:0.75rem;}
+.exp-header{display:flex;justify-content:space-between;align-items:baseline;}
+.exp-role{font-weight:600;font-size:10pt;color:#050f08;}
+.exp-co{color:#00875a;font-weight:500;}
+.exp-date{font-size:8.5pt;color:#777;font-family:'JetBrains Mono',monospace;}
+.exp-loc{font-size:8.5pt;color:#999;margin-bottom:2px;}
+.exp-bullets{padding-left:1rem;}
+.exp-bullets li{font-size:9pt;color:#444;margin-bottom:1px;}
+.proj-row{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-bottom:0.5rem;}
+.proj-mini{padding:0.4rem 0.6rem;background:#f8fffe;border-left:2px solid #00d26a;}
+.proj-name{font-weight:600;font-size:9.5pt;color:#050f08;}
+.proj-stack{font-size:8.5pt;color:#777;font-family:'JetBrains Mono',monospace;}
+.cert-inline{font-size:9pt;color:#444;}
+.footer-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;font-size:9pt;color:#444;}
+.footer-row strong{color:#050f08;}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="header">
+  <div class="h-name">Abu Sayed</div>
+  <div class="h-title">Full Stack Developer · AI Engineer · Unity VR · AWS Expert</div>
+  <div class="h-contact">
+    <span>📍 Dhaka, Bangladesh · Remote Worldwide</span>
+    <span>📞 <a href="tel:+8801925785462">+8801925785462</a></span>
+    <span>✉️ <a href="mailto:hi@abusayed.com.bd">hi@abusayed.com.bd</a></span>
+    <span>🌐 <a href="https://abusayed.com.bd">abusayed.com.bd</a></span>
+    <span>💼 <a href="https://bd.linkedin.com/in/imabusayed">linkedin.com/in/imabusayed</a></span>
+    <span>🐙 <a href="https://github.com/ImAbuSayed">github.com/ImAbuSayed</a></span>
+  </div>
+</div>
 
-    function onScroll() {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      progressBar.style.width = progress + "%";
+<div class="section">
+  <div class="section-title">Summary</div>
+  <p style="font-size:9.5pt;color:#333;font-style:italic;">Multi-disciplinary Full Stack Developer & AI Engineer with 5+ years of experience and 50+ projects delivered worldwide. Expert in Laravel, React, Next.js, Flutter, Unity3D VR, OpenAI API, and AWS. Available for Remote, Freelance, Contract, and Full-Time roles globally.</p>
+</div>
 
-      let currentId = "";
-      sections.forEach(section => {
-        const top = section.offsetTop - 120;
-        if (scrollTop >= top) currentId = section.getAttribute("id");
-      });
+<div class="section">
+  <div class="section-title">Skills</div>
+  <div class="two-col">
+    <div class="skill-block"><strong>Web & Backend</strong><p>PHP · Laravel · Livewire · React · Next.js · Filament · Node.js · WordPress · MySQL · PostgreSQL · MongoDB · Redis</p></div>
+    <div class="skill-block"><strong>AI / ML / Data</strong><p>OpenAI API · GPT-4 · Whisper · LLM Fine-Tuning · TensorFlow · PyTorch · Pandas · Tableau · Power BI</p></div>
+    <div class="skill-block"><strong>Cloud & DevOps</strong><p>AWS · GCP · Azure · Docker · Kubernetes · Jenkins · Terraform · Ansible · Linux · Nginx · CCNA · MikroTik</p></div>
+    <div class="skill-block"><strong>Mobile & VR</strong><p>Unity3D · C# · Flutter · React Native · Dart · Android · iOS · Apple Pay · VR Avatar Systems</p></div>
+  </div>
+</div>
 
-      navItems.forEach(link => {
-        link.classList.toggle("active", link.getAttribute("href") === "#" + currentId);
-      });
-    }
+<div class="section">
+  <div class="section-title">Experience</div>
+  <div class="exp-item">
+    <div class="exp-header">
+      <span class="exp-role">Full Stack Developer (Lead) & AI Trainer <span class="exp-co">@ Aesthetic Code Lab / UFT</span></span>
+      <span class="exp-date">May 2024 – Present</span>
+    </div>
+    <ul class="exp-bullets">
+      <li>Built Unity VR + C# avatar system; engineered AI job matching at 92% accuracy (OpenAI + Laravel)</li>
+      <li>Delivered zero-downtime AWS + Jenkins CI/CD; integrated Jitsi Meet & Zoom APIs</li>
+      <li>Teaching AI & Web Dev to university students under MoU with Tokyo Gogaku Gakko, Japan</li>
+    </ul>
+  </div>
+  <div class="exp-item">
+    <div class="exp-header">
+      <span class="exp-role">Business Data Analyst <span class="exp-co">@ Otto Spinning Ltd.</span></span>
+      <span class="exp-date">March 2021 – April 2024</span>
+    </div>
+    <ul class="exp-bullets">
+      <li>ML-based forecasting → 15% inventory cost reduction; production scheduling → 10% efficiency gain</li>
+      <li>Built Tableau & Power BI dashboards for C-suite decision making; improved data accuracy by 20%</li>
+    </ul>
+  </div>
+  <div class="exp-item">
+    <div class="exp-header">
+      <span class="exp-role">Founder & CTO <span class="exp-co">@ Ai Blogify · Trading Now · ToolsNess</span></span>
+      <span class="exp-date">Nov 2021 – Feb 2024</span>
+    </div>
+    <ul class="exp-bullets">
+      <li>Architected AI-powered SaaS products; managed VPS infrastructure, SEO, and paid ad campaigns</li>
+    </ul>
+  </div>
+  <div class="exp-item">
+    <div class="exp-header">
+      <span class="exp-role">Freelance Web Developer (Top-Rated)</span>
+      <span class="exp-date">2019 – 2022</span>
+    </div>
+    <ul class="exp-bullets">
+      <li>Delivered 50+ WordPress/PHP websites for international clients; consistent on-time delivery</li>
+    </ul>
+  </div>
+</div>
 
-    window.addEventListener("scroll", onScroll);
-    onScroll();
+<div class="section">
+  <div class="section-title">Key Projects</div>
+  <div class="proj-row">
+    <div class="proj-mini"><div class="proj-name">Ryūgaku Mensetsu System</div><div class="proj-stack">Laravel · OpenAI Whisper · WebRTC · Livewire — 70% eval time saved</div></div>
+    <div class="proj-mini"><div class="proj-name">TOKUTEI GINOU GAKKO App</div><div class="proj-stack">Laravel · Flutter · AWS · Docker — iOS + Android · Apple Pay</div></div>
+    <div class="proj-mini"><div class="proj-name">AI Job Matching + Unity VR</div><div class="proj-stack">Laravel · OpenAI · Unity3D · C# — 92% accuracy · 500+ users</div></div>
+    <div class="proj-mini"><div class="proj-name">ChatLab AI App</div><div class="proj-stack">React Native · Expo · OpenAI — Android · Google Play</div></div>
+  </div>
+</div>
 
-    const speakBtn = document.getElementById("speakBtn");
-    const stopSpeakBtn = document.getElementById("stopSpeakBtn");
+<div class="section">
+  <div class="section-title">Education</div>
+  <p style="font-size:9.5pt;color:#333;"><strong>BSc. Computer Science & Engineering</strong> — Bangladesh Institute of Science and Technology, Dhaka</p>
+</div>
 
-    speakBtn.addEventListener("click", () => {
-      if (!("speechSynthesis" in window)) {
-        alert("Your browser does not support speech synthesis.");
-        return;
-      }
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(
-        "Hello, I am Abu Sayed. I build AI powered SaaS platforms, full stack web applications, Unity VR systems, and cloud ready products for global teams."
-      );
-      utterance.rate = 1;
-      utterance.pitch = 1;
-      utterance.lang = "en-US";
-      window.speechSynthesis.speak(utterance);
-    });
+<div class="section">
+  <div class="section-title">Certifications</div>
+  <p class="cert-inline">Cisco CCNA (PeopleNTech) · MikroTik Configuration · DevOps Training (Interactive Care) · Windows Server Administration · Python Automation (Google) · Professional English Communication (WSDA New Zealand)</p>
+</div>
 
-    stopSpeakBtn.addEventListener("click", () => {
-      if ("speechSynthesis" in window) {
-        window.speechSynthesis.cancel();
-      }
-    });
-  </script>
+<div class="section">
+  <div class="section-title">Additional</div>
+  <div class="footer-row">
+    <div><strong>Availability:</strong> Remote · Worldwide</div>
+    <div><strong>Languages:</strong> English (Fluent) · Bangla (Native)</div>
+    <div><strong>DOB:</strong> 26th December</div>
+  </div>
+</div>
+</div>
+<script>window.print();<\/script>
+</body></html>`;
+}
+
+// ===== NAV SMOOTH =====
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const target=document.querySelector(a.getAttribute('href'));
+    if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth'});}
+  });
+});
+</script>
 </body>
 </html>
