@@ -284,100 +284,100 @@ nav{
   transform:translateY(-2px);
 }
 
-/* ===== HERO IMAGE WRAPPER ===== */
-.hero-visual {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  padding: 50px; /* Space for badges to overflow */
+/* ===== HERO IMAGE ===== */
+.hero-visual{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
 }
 
-.hero-img-wrap {
-  position: relative;
-  width: 340px;
-  height: 400px;
-  padding: 12px;
-  overflow: visible; /* Allows badges to pop out of the frame */
+.hero-img-wrap{
+  position:relative;
+  width:340px;
+  height:400px;
+  padding:12px;
+  overflow:visible;
 }
 
-/* Animated Border */
-.hero-img-border {
-  position: absolute;
-  inset: 0;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--accent), var(--blue), var(--purple), var(--orange));
-  animation: rotateBorder 4s linear infinite;
-  z-index: 1;
+.hero-img-border{
+  position:absolute;
+  inset:0;
+  border-radius:8px;
+  background:linear-gradient(135deg,var(--accent),var(--blue),var(--purple),var(--orange));
+  animation:rotateBorder 4s linear infinite;
+  z-index:1;
 }
 
-/* Image Container */
-.hero-img-inner {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  background: var(--bg2);
-  border-radius: 6px;
-  overflow: hidden;
-  padding: 2px;
+.hero-img-inner{
+  position:relative;
+  z-index:2;
+  width:100%;
+  height:100%;
+  background:var(--bg2);
+  border-radius:6px;
+  overflow:hidden;
+  padding:2px;
 }
 
-.hero-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 4px;
-  filter: grayscale(20%) contrast(1.1);
+.hero-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:4px;
+  filter:grayscale(20%) contrast(1.1);
 }
 
-/* ===== FLOATING BADGES (THE FIX) ===== */
-.hero-stats, .hero-badge {
-  position: absolute;
-  z-index: 10; /* Keeps text above everything else */
-  background: var(--bg2);
-  padding: 12px 18px;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  color: var(--text);
-  font-family: sans-serif;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+/* real visible corner frame accents */
+.hero-img-wrap::before,
+.hero-img-wrap::after{
+  content:'';
+  position:absolute;
+  width:74px;
+  height:74px;
+  pointer-events:none;
+  z-index:6;
 }
 
-/* Stats Box (Top Left) */
-.hero-stats {
-  top: 40px;
-  left: -40px;
-  text-align: center;
+.hero-img-wrap::before{
+  left:-10px;
+  bottom:-10px;
+  border-left:2px solid var(--accent2);
+  border-bottom:2px solid var(--accent2);
 }
 
-.stat-num {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--accent);
-  display: block;
+.hero-img-wrap::after{
+  top:-10px;
+  right:-10px;
+  border-top:2px solid var(--blue);
+  border-right:2px solid var(--blue);
 }
 
-.stat-label {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  opacity: 0.8;
+.hero-stats{
+  position:absolute;
+  bottom:-26px;
+  left:-26px;
+  background:var(--bg2);
+  border:1px solid var(--border);
+  padding:1rem 1.5rem;
+  border-radius:4px;
+  backdrop-filter:blur(10px);
+  z-index:5;
 }
 
-/* Work Badge (Bottom Right) */
-.hero-badge {
-  bottom: 20px;
-  right: -30px;
-  font-size: 0.85rem;
-  line-height: 1.5;
-  border-left: 4px solid var(--accent); /* Adds a nice accent strip */
-}
-
-/* Border Animation */
-@keyframes rotateBorder {
-  0% { filter: hue-rotate(0deg); }
-  100% { filter: hue-rotate(360deg); }
+.hero-badge{
+  position:absolute;
+  top:-15px;
+  right:-15px;
+  background:rgba(255,107,53,0.1);
+  border:1px solid rgba(255,107,53,0.4);
+  padding:0.75rem 1rem;
+  border-radius:4px;
+  font-size:10px;
+  color:var(--orange);
+  font-family:var(--mono);
+  text-align:center;
+  z-index:5;
 }
 
 /* ===== SECTION BASE ===== */
@@ -1081,13 +1081,12 @@ footer{
     </div>
 
     <div class="hero-stats">
-      <span class="stat-num">50+</span>
-      <span class="stat-label">Projects Delivered</span>
+      <div class="stat-num">50+</div>
+      <div class="stat-label">Projects Delivered</div>
     </div>
 
     <div class="hero-badge">
-      <strong>Open to Work</strong><br>
-      Remote · Worldwide
+      Open to Work<br>Remote · Worldwide
     </div>
   </div>
 </div>
