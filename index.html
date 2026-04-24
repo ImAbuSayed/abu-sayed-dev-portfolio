@@ -290,7 +290,111 @@ nav{
   justify-content:center;
   align-items:center;
   position:relative;
+  z-index:1;
 }
+
+/* ===== SOLAR SYSTEM SKILLS ===== */
+.solar-system {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px dashed rgba(0, 210, 106, 0.2);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.orbit-1 { width: 440px; height: 440px; }
+.orbit-2 { width: 560px; height: 560px; border-color: rgba(0, 212, 255, 0.15); }
+.orbit-3 { width: 680px; height: 680px; border-color: rgba(176, 106, 255, 0.15); }
+
+.planet-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  z-index: 1;
+}
+
+.orbit-1-anim { animation: spin 25s linear infinite; }
+.orbit-2-anim { animation: spin-reverse 35s linear infinite; }
+.orbit-3-anim { animation: spin 45s linear infinite; }
+
+.solar-system:has(.hover-glow:hover) .orbit-1-anim,
+.solar-system:has(.hover-glow:hover) .orbit-2-anim,
+.solar-system:has(.hover-glow:hover) .orbit-3-anim,
+.solar-system:has(.hover-glow:hover) .planet-counter-1,
+.solar-system:has(.hover-glow:hover) .planet-counter-2,
+.solar-system:has(.hover-glow:hover) .planet-counter-3 {
+  animation-play-state: paused;
+}
+
+.planet-pos {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotate(var(--angle)) translateX(var(--radius)) rotate(calc(var(--angle) * -1));
+}
+
+.planet-counter-1 { animation: spin-reverse 25s linear infinite; display:flex; justify-content:center; align-items:center; }
+.planet-counter-2 { animation: spin 35s linear infinite; display:flex; justify-content:center; align-items:center; }
+.planet-counter-3 { animation: spin-reverse 45s linear infinite; display:flex; justify-content:center; align-items:center; }
+
+.planet-counter-1 > *, .planet-counter-2 > *, .planet-counter-3 > * {
+  transform: translate(-50%, -50%);
+}
+
+.hover-glow {
+  pointer-events: auto;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  white-space: nowrap;
+  backdrop-filter: blur(5px);
+}
+.hover-glow:hover {
+  transform: translate(-50%, -50%) scale(1.3);
+  box-shadow: 0 0 20px rgba(0, 210, 106, 0.8), 0 0 40px rgba(0, 210, 106, 0.4);
+  background: var(--bg2);
+  border-color: var(--accent);
+  color: var(--accent);
+  z-index: 10;
+}
+.orbit-2-anim .hover-glow {
+  background: rgba(0, 212, 255, 0.06);
+  border-color: rgba(0, 212, 255, 0.12);
+}
+.orbit-2-anim .hover-glow:hover {
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.8), 0 0 40px rgba(0, 212, 255, 0.4);
+  border-color: var(--blue);
+  color: var(--blue);
+  background: var(--bg2);
+}
+.orbit-3-anim .hover-glow {
+  background: rgba(176, 106, 255, 0.06);
+  border-color: rgba(176, 106, 255, 0.12);
+}
+.orbit-3-anim .hover-glow:hover {
+  box-shadow: 0 0 20px rgba(176, 106, 255, 0.8), 0 0 40px rgba(176, 106, 255, 0.4);
+  border-color: var(--purple);
+  color: var(--purple);
+  background: var(--bg2);
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }
+@keyframes spin-reverse { 100% { transform: rotate(-360deg); } }
 
 .hero-img-wrap{
   position:relative;
@@ -298,6 +402,7 @@ nav{
   height:400px;
   padding:12px;
   overflow:visible;
+  z-index:2;
 }
 
 .hero-img-border{
@@ -369,15 +474,17 @@ nav{
   position:absolute;
   top:-15px;
   right:-15px;
-  background:rgba(255,107,53,0.1);
-  border:1px solid rgba(255,107,53,0.4);
+  background:var(--bg2);
+  border:1px solid rgba(255,107,53,0.6);
   padding:0.75rem 1rem;
   border-radius:4px;
   font-size:10px;
   color:var(--orange);
   font-family:var(--mono);
   text-align:center;
-  z-index:5;
+  z-index:10;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  backdrop-filter:blur(10px);
 }
 
 /* ===== SECTION BASE ===== */
@@ -1069,6 +1176,85 @@ footer{
       </div>
     </div>
 <div class="hero-visual">
+  <div class="solar-system">
+    <!-- Orbit Rings -->
+    <div class="orbit orbit-1"></div>
+    <div class="orbit orbit-2"></div>
+    <div class="orbit orbit-3"></div>
+
+    <!-- Planets Orbit 1 -->
+    <div class="planet-orbit orbit-1-anim">
+      <div class="planet-pos" style="--angle: 0deg; --radius: 220px;">
+        <div class="planet-counter-1">
+          <span class="tech-tag hover-glow">React</span>
+        </div>
+      </div>
+      <div class="planet-pos" style="--angle: 120deg; --radius: 220px;">
+        <div class="planet-counter-1">
+          <span class="tech-tag hover-glow">Laravel</span>
+        </div>
+      </div>
+      <div class="planet-pos" style="--angle: 240deg; --radius: 220px;">
+        <div class="planet-counter-1">
+          <span class="tech-tag hover-glow">Next.js</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Planets Orbit 2 -->
+    <div class="planet-orbit orbit-2-anim">
+      <div class="planet-pos" style="--angle: 45deg; --radius: 280px;">
+        <div class="planet-counter-2">
+          <span class="tech-tag hover-glow">Python</span>
+        </div>
+      </div>
+      <div class="planet-pos" style="--angle: 135deg; --radius: 280px;">
+        <div class="planet-counter-2">
+          <span class="tech-tag hover-glow">Unity VR</span>
+        </div>
+      </div>
+      <div class="planet-pos" style="--angle: 225deg; --radius: 280px;">
+        <div class="planet-counter-2">
+          <span class="tech-tag hover-glow">Docker</span>
+        </div>
+      </div>
+      <div class="planet-pos" style="--angle: 315deg; --radius: 280px;">
+        <div class="planet-counter-2">
+          <span class="tech-tag hover-glow">OpenAI</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Planets Orbit 3 -->
+    <div class="planet-orbit orbit-3-anim">
+      <div class="planet-pos" style="--angle: 0deg; --radius: 340px;">
+        <div class="planet-counter-3">
+          <span class="tech-tag hover-glow">AWS</span>
+        </div>
+      </div>
+      <div class="planet-pos" style="--angle: 72deg; --radius: 340px;">
+        <div class="planet-counter-3">
+          <span class="tech-tag hover-glow">PHP</span>
+        </div>
+      </div>
+      <div class="planet-pos" style="--angle: 144deg; --radius: 340px;">
+        <div class="planet-counter-3">
+          <span class="tech-tag hover-glow">TypeScript</span>
+        </div>
+      </div>
+      <div class="planet-pos" style="--angle: 216deg; --radius: 340px;">
+        <div class="planet-counter-3">
+          <span class="tech-tag hover-glow">Flutter</span>
+        </div>
+      </div>
+      <div class="planet-pos" style="--angle: 288deg; --radius: 340px;">
+        <div class="planet-counter-3">
+          <span class="tech-tag hover-glow">PyTorch</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="hero-img-wrap">
     <div class="hero-img-border"></div>
 
