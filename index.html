@@ -48,6 +48,9 @@ body{
   line-height:1.7;
   overflow-x:hidden;
 }
+body.nav-open{
+  overflow:hidden;
+}
 
 /* ===== NOISE OVERLAY ===== */
 body::before{
@@ -838,6 +841,88 @@ nav{
   gap:0.75rem;
   margin-top:1.5rem;
 }
+.music-feature{
+  margin-bottom:2rem;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:1.5rem;
+  padding:1.35rem;
+  border:1px solid rgba(0,212,255,0.18);
+  background:linear-gradient(135deg,rgba(0,212,255,0.08),rgba(176,106,255,0.12));
+  border-radius:4px;
+  position:relative;
+  overflow:hidden;
+}
+.music-feature::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.05),transparent);
+  transform:translateX(-100%);
+  animation:musicSweep 4.5s ease-in-out infinite;
+  pointer-events:none;
+}
+.music-feature-copy{
+  position:relative;
+  z-index:1;
+  max-width:680px;
+}
+.music-kicker{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--blue);
+  margin-bottom:0.75rem;
+}
+.music-feature-title{
+  font-family:var(--heading-font);
+  font-size:clamp(1.3rem,2.5vw,2rem);
+  line-height:1.1;
+  color:var(--text);
+  min-height:2.4em;
+  margin-bottom:0.75rem;
+  display:flex;
+  align-items:flex-start;
+  flex-wrap:wrap;
+}
+.typing-text{
+  max-width:100%;
+}
+.typing-cursor{
+  width:1px;
+  height:1.1em;
+  margin-left:0.28rem;
+  background:var(--accent2);
+  box-shadow:0 0 16px rgba(0,245,160,0.45);
+  animation:blinkCursor 0.9s step-end infinite;
+}
+.music-feature-desc{
+  color:var(--muted);
+  font-size:12px;
+  max-width:620px;
+}
+.btn-journey{
+  background:linear-gradient(135deg,var(--accent),var(--blue));
+  color:#03140d;
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 16px 40px rgba(0,212,255,0.18);
+  white-space:nowrap;
+  z-index:1;
+}
+.btn-journey:hover{
+  transform:translateY(-3px);
+  box-shadow:0 22px 48px rgba(0,212,255,0.24);
+}
+@keyframes blinkCursor{
+  0%,49%{opacity:1;}
+  50%,100%{opacity:0;}
+}
+@keyframes musicSweep{
+  0%,15%{transform:translateX(-100%);}
+  45%,100%{transform:translateX(120%);}
+}
 .platform-btn{
   display:inline-flex;
   align-items:center;
@@ -1062,8 +1147,24 @@ footer{
 }
 
 /* ===== MOBILE HAMBURGER ===== */
-.nav-toggle{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px;}
-.nav-toggle span{display:block;width:20px;height:1.5px;background:var(--accent);}
+.nav-toggle{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  cursor:pointer;
+  padding:8px;
+  border:1px solid rgba(0,210,106,0.15);
+  background:rgba(255,255,255,0.02);
+  border-radius:4px;
+}
+.nav-toggle span{
+  display:block;
+  width:20px;
+  height:1.5px;
+  background:var(--accent);
+  transition:transform 0.25s ease,opacity 0.25s ease;
+  transform-origin:center;
+}
 
 /* ===== SCROLL REVEAL ===== */
 .reveal{
@@ -1145,6 +1246,11 @@ footer{
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:900px){
+  nav{
+    padding:0.9rem 1rem;
+    flex-wrap:wrap;
+    gap:0.75rem;
+  }
   .hero-grid{grid-template-columns:1fr;}
   .hero-grid{gap:2rem;}
   .hero-visual{
@@ -1177,11 +1283,72 @@ footer{
   .tech-categories{grid-template-columns:1fr;}
   .edu-grid{grid-template-columns:1fr;}
   .contact-grid{grid-template-columns:1fr;}
-  .nav-links{display:none;}
-  .nav-toggle{display:flex;}
+  .nav-logo{order:1;}
+  .nav-toggle{
+    display:flex;
+    order:2;
+    margin-left:auto;
+  }
+  .nav-status{
+    order:3;
+    width:100%;
+    font-size:10px;
+    justify-content:flex-start;
+    padding-right:2.5rem;
+  }
+  .nav-links{
+    display:none;
+    order:4;
+    width:100%;
+    flex-direction:column;
+    gap:0.4rem;
+    margin-top:0.25rem;
+    padding:0.85rem;
+    border:1px solid var(--border-bright);
+    border-radius:4px;
+    background:rgba(10,10,16,0.96);
+    box-shadow:0 24px 60px rgba(0,0,0,0.28);
+  }
+  .nav-links li{width:100%;}
+  .nav-links a{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    width:100%;
+    padding:0.75rem 0.8rem;
+    font-size:10px;
+    border:1px solid rgba(255,255,255,0.06);
+    background:rgba(255,255,255,0.02);
+  }
+  nav.nav-open .nav-links{display:flex;}
+  nav.nav-open .nav-toggle span:nth-child(1){transform:translateY(5.5px) rotate(45deg);}
+  nav.nav-open .nav-toggle span:nth-child(2){opacity:0;}
+  nav.nav-open .nav-toggle span:nth-child(3){transform:translateY(-5.5px) rotate(-45deg);}
+  .music-feature{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .btn-journey{width:100%;justify-content:center;}
   .download-section{flex-direction:column;}
 }
 @media(max-width:600px){
+  nav{
+    padding:0.85rem 0.9rem;
+  }
+  .nav-status{
+    font-size:9px;
+    padding-right:0;
+  }
+  .music-section{
+    padding:1.5rem;
+  }
+  .music-feature{
+    padding:1rem;
+  }
+  .music-feature-title{
+    min-height:auto;
+    font-size:1.2rem;
+  }
   .hero{
     padding:5.5rem 1rem 3rem;
   }
@@ -1223,7 +1390,7 @@ footer{
 <!-- NAV -->
 <nav id="navbar">
   <a href="#" class="nav-logo">Abu<span>Sayed</span></a>
-  <ul class="nav-links">
+  <ul class="nav-links" id="mobileNavLinks">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#experience">Experience</a></li>
@@ -1235,9 +1402,9 @@ footer{
     <span class="status-dot"></span>
     <span>Open to Work · Remote Worldwide</span>
   </div>
-  <div class="nav-toggle" id="navToggle">
+  <button class="nav-toggle" id="navToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileNavLinks">
     <span></span><span></span><span></span>
-  </div>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -1779,6 +1946,21 @@ footer{
     <a href="https://albums.abusayed.com.bd/3d-city" target="_blank" class="btn btn-secondary" style="margin-bottom:1.5rem;display:inline-flex;">
       🥽 Explore 3D Music Virtual City
     </a>
+    <div class="music-feature">
+      <div class="music-feature-copy">
+        <div class="music-kicker">Interactive Timeline</div>
+        <h3 class="music-feature-title">
+          <span class="typing-text" id="musicJourneyTyping" data-typing="Abu Sayed's Musical Journey | Interactive Experience"></span>
+          <span class="typing-cursor" aria-hidden="true"></span>
+        </h3>
+        <p class="music-feature-desc">
+          Experience the evolution of Abu Sayed's music through an interactive timeline. Explore key milestones, releases, and the artistic growth of Abu Sayed.
+        </p>
+      </div>
+      <a href="https://albums.abusayed.com.bd/musical-journey" target="_blank" rel="noopener noreferrer" class="btn btn-journey">
+        View Interactive Journey <i class="fas fa-arrow-up-right-from-square"></i>
+      </a>
+    </div>
     <div class="music-platforms">
       <a href="https://open.spotify.com/artist/6vnjuWLcV3nHwIFeozztMv" target="_blank" class="platform-btn"><i class="fab fa-spotify" style="color:#1db954;"></i> Spotify</a>
       <a href="https://music.apple.com/ae/artist/abu-sayed/1622976966" target="_blank" class="platform-btn"><i class="fab fa-apple" style="color:#fc3c44;"></i> Apple Music</a>
@@ -2455,10 +2637,74 @@ body{font-family:'Inter',sans-serif;font-size:10.5pt;color:#1a1a2e;background:#f
 // ===== NAV SMOOTH =====
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{
-    const target=document.querySelector(a.getAttribute('href'));
+    const href=a.getAttribute('href');
+    if(!href){return;}
+    if(href==='#'){
+      e.preventDefault();
+      window.scrollTo({top:0,behavior:'smooth'});
+      return;
+    }
+    const target=document.querySelector(href);
     if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth'});}
   });
 });
+
+// ===== MOBILE NAV =====
+const navEl=document.getElementById('navbar');
+const navToggle=document.getElementById('navToggle');
+const navLinks=navEl?.querySelector('.nav-links');
+const mobileNavQuery=window.matchMedia('(max-width: 900px)');
+const setNavState=(isOpen)=>{
+  if(!navEl||!navToggle){return;}
+  navEl.classList.toggle('nav-open',isOpen);
+  navToggle.setAttribute('aria-expanded',String(isOpen));
+  navToggle.setAttribute('aria-label',isOpen?'Close navigation menu':'Open navigation menu');
+  document.body.classList.toggle('nav-open',isOpen&&mobileNavQuery.matches);
+};
+if(navToggle&&navLinks){
+  navToggle.addEventListener('click',()=>setNavState(!navEl.classList.contains('nav-open')));
+  navLinks.querySelectorAll('a').forEach(link=>{
+    link.addEventListener('click',()=>{
+      if(mobileNavQuery.matches){setNavState(false);}
+    });
+  });
+  const handleNavViewportChange=(event)=>{
+    if(!event.matches){setNavState(false);}
+  };
+  if(typeof mobileNavQuery.addEventListener==='function'){
+    mobileNavQuery.addEventListener('change',handleNavViewportChange);
+  }else if(typeof mobileNavQuery.addListener==='function'){
+    mobileNavQuery.addListener(handleNavViewportChange);
+  }
+}
+
+// ===== MUSIC TYPING =====
+const typingElements=document.querySelectorAll('[data-typing]');
+const typeText=(element)=>{
+  if(!element||element.dataset.typed==='true'){return;}
+  const text=element.dataset.typing||'';
+  let index=0;
+  element.dataset.typed='true';
+  const tick=()=>{
+    element.textContent=text.slice(0,index);
+    index+=1;
+    if(index<=text.length){
+      setTimeout(tick,32);
+    }
+  };
+  tick();
+};
+if(typingElements.length){
+  const typingObserver=new IntersectionObserver((entries,observer)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        typeText(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.55});
+  typingElements.forEach(element=>typingObserver.observe(element));
+}
 </script>
 </body>
 </html>
