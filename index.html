@@ -2916,7 +2916,7 @@ document.querySelectorAll('a[target=\"_blank\"]').forEach(link=>{
 const speechToggle=document.getElementById('speechToggle');
 const speechStop=document.getElementById('speechStop');
 const speechStatus=document.getElementById('speechStatus');
-let speechEnabled=false;
+let speechEnabled=true;
 const speechSupported='speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
 const updateSpeechUi=()=>{
   if(!speechToggle||!speechStop){return;}
