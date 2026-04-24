@@ -350,15 +350,24 @@ nav{
   position: absolute;
   top: 0;
   left: 0;
-  transform: rotate(var(--angle)) translateX(var(--radius)) rotate(calc(var(--angle) * -1));
+  transform: rotate(var(--angle)) translateX(calc(var(--radius) - var(--orbit-inset, 0px))) rotate(calc(var(--angle) * -1));
 }
 
 .planet-counter-1 { animation: spin-reverse 25s linear infinite; display:flex; justify-content:center; align-items:center; }
 .planet-counter-2 { animation: spin 35s linear infinite; display:flex; justify-content:center; align-items:center; }
 .planet-counter-3 { animation: spin-reverse 45s linear infinite; display:flex; justify-content:center; align-items:center; }
 
+.orbit-1-anim .planet-pos { --orbit-inset: 24px; }
+.orbit-2-anim .planet-pos { --orbit-inset: 30px; }
+.orbit-3-anim .planet-pos { --orbit-inset: 38px; }
+
 .planet-counter-1 > *, .planet-counter-2 > *, .planet-counter-3 > * {
   transform: translate(-50%, -50%);
+}
+
+.solar-system .tech-tag{
+  font-size:9px;
+  padding:0.26rem 0.5rem;
 }
 
 .hover-glow {
@@ -370,7 +379,7 @@ nav{
   backdrop-filter: blur(5px);
 }
 .hover-glow:hover {
-  transform: translate(-50%, -50%) scale(1.3);
+  transform: translate(-50%, -50%) scale(1.16);
   box-shadow: 0 0 20px rgba(0, 210, 106, 0.8), 0 0 40px rgba(0, 210, 106, 0.4);
   background: var(--bg2);
   border-color: var(--accent);
@@ -403,9 +412,9 @@ nav{
 
 .hero-img-wrap{
   position:relative;
-  width:310px;
-  height:364px;
-  padding:12px;
+  width:286px;
+  height:336px;
+  padding:10px;
   overflow:visible;
   z-index:2;
 }
@@ -443,47 +452,63 @@ nav{
 .hero-img-wrap::after{
   content:'';
   position:absolute;
-  width:74px;
-  height:74px;
+  width:60px;
+  height:60px;
   pointer-events:none;
   z-index:6;
 }
 
 .hero-img-wrap::before{
-  left:-10px;
-  bottom:-10px;
+  left:-8px;
+  bottom:-8px;
   border-left:2px solid var(--accent2);
   border-bottom:2px solid var(--accent2);
 }
 
 .hero-img-wrap::after{
-  top:-10px;
-  right:-10px;
+  top:-8px;
+  right:-8px;
   border-top:2px solid var(--blue);
   border-right:2px solid var(--blue);
 }
 
 .hero-stats{
   position:absolute;
-  bottom:-26px;
-  left:-26px;
+  bottom:-20px;
+  left:-20px;
   background:var(--bg2);
   border:1px solid var(--border);
-  padding:1rem 1.5rem;
+  padding:0.8rem 1.15rem;
   border-radius:4px;
   backdrop-filter:blur(10px);
   z-index:5;
 }
 
+.hero-stats .stat-num{
+  font-family:var(--heading-font);
+  font-size:2rem;
+  font-weight:800;
+  line-height:1;
+  color:var(--accent);
+}
+
+.hero-stats .stat-label{
+  font-family:var(--mono);
+  font-size:9px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
 .hero-badge{
   position:absolute;
-  top:-15px;
-  right:-15px;
+  top:-12px;
+  right:-12px;
   background:var(--bg2);
   border:1px solid rgba(255,107,53,0.6);
-  padding:0.75rem 1rem;
+  padding:0.6rem 0.8rem;
   border-radius:4px;
-  font-size:10px;
+  font-size:9px;
   color:var(--orange);
   font-family:var(--mono);
   text-align:center;
@@ -1112,19 +1137,19 @@ footer{
   }
   .solar-system{z-index:0;}
   .hero-img-wrap{
-    width:240px;
-    height:282px;
-    padding:10px;
+    width:220px;
+    height:258px;
+    padding:9px;
   }
   .hero-stats{
-    left:-14px;
-    bottom:-16px;
-    padding:0.8rem 1rem;
+    left:-12px;
+    bottom:-14px;
+    padding:0.65rem 0.9rem;
   }
   .hero-badge{
-    top:-10px;
-    right:-10px;
-    padding:0.65rem 0.8rem;
+    top:-9px;
+    right:-9px;
+    padding:0.5rem 0.65rem;
     font-size:9px;
   }
   .stats-bar{grid-template-columns:repeat(2,1fr);}
@@ -1144,18 +1169,18 @@ footer{
     --solar-scale:0.46;
   }
   .hero-img-wrap{
-    width:210px;
-    height:248px;
+    width:194px;
+    height:228px;
   }
   .hero-stats{
     left:-8px;
-    bottom:-10px;
-    padding:0.7rem 0.85rem;
+    bottom:-8px;
+    padding:0.55rem 0.75rem;
   }
   .hero-badge{
-    top:-8px;
-    right:-8px;
-    padding:0.55rem 0.7rem;
+    top:-7px;
+    right:-7px;
+    padding:0.45rem 0.58rem;
   }
   .stats-bar{grid-template-columns:repeat(2,1fr);}
   .projects-grid{grid-template-columns:1fr;}
