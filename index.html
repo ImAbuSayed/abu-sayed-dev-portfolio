@@ -284,102 +284,180 @@ nav{
   transform:translateY(-2px);
 }
 
-/* ===== HERO IMAGE WRAPPER ===== */
+/* ===== MAIN WRAPPER ===== */
 .hero-visual {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  padding: 50px; /* Space for badges to overflow */
+  padding: 40px; /* Extra padding to allow badges to float outside */
 }
 
+/* ===== CARD CONTAINER ===== */
 .hero-img-wrap {
   position: relative;
   width: 340px;
   height: 400px;
-  padding: 12px;
-  overflow: visible; /* Allows badges to pop out of the frame */
+  padding: 6px;
+  border-radius: 12px;
+  /* Smooth transition for interactive cursor hover */
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
 }
 
-/* Animated Border */
+.hero-img-wrap:hover {
+  transform: translateY(-10px) scale(1.02);
+}
+
+/* ===== ANIMATED BORDER ===== */
 .hero-img-border {
   position: absolute;
   inset: 0;
-  border-radius: 8px;
+  border-radius: 14px;
   background: linear-gradient(135deg, var(--accent), var(--blue), var(--purple), var(--orange));
-  animation: rotateBorder 4s linear infinite;
+  background-size: 300% 300%;
+  animation: smoothGradient 6s ease infinite;
   z-index: 1;
+  /* Adds a glowing effect outside the border */
+  filter: blur(8px);
+  opacity: 0.8;
+  transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
-/* Image Container */
+.hero-img-wrap:hover .hero-img-border {
+  opacity: 1;
+  filter: blur(12px);
+}
+
+/* Make sure the actual solid border exists right under the image */
+.hero-img-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--accent), var(--blue), var(--purple), var(--orange));
+  background-size: 300% 300%;
+  animation: smoothGradient 6s ease infinite;
+  z-index: 2;
+}
+
+/* ===== IMAGE INNER WRAPPER ===== */
 .hero-img-inner {
   position: relative;
-  z-index: 2;
+  z-index: 3; /* Must be higher than the borders */
   width: 100%;
   height: 100%;
   background: var(--bg2);
-  border-radius: 6px;
+  border-radius: 10px;
   overflow: hidden;
-  padding: 2px;
 }
 
 .hero-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 8px;
   filter: grayscale(20%) contrast(1.1);
+  transition: filter 0.5s ease, transform 0.5s ease;
 }
 
-/* ===== FLOATING BADGES (THE FIX) ===== */
+.hero-img-wrap:hover .hero-img {
+  filter: grayscale(0%) contrast(1.1);
+  transform: scale(1.05);
+}
+
+/* ===== PREMIUM FLOATING BADGES (GLASSMORPHISM) ===== */
 .hero-stats, .hero-badge {
   position: absolute;
-  z-index: 10; /* Keeps text above everything else */
-  background: var(--bg2);
-  padding: 12px 18px;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  color: var(--text);
-  font-family: sans-serif;
+  z-index: 10; /* CRITICAL: This keeps it above the image! */
+  background: rgba(30, 30, 36, 0.7); /* Semi-transparent dark background */
+  backdrop-filter: blur(12px); /* Premium Glass effect */
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px 20px;
+  color: var(--text-main);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Stats Box (Top Left) */
+/* Stats Positioning */
 .hero-stats {
-  top: 40px;
-  left: -40px;
-  text-align: center;
+  top: 30px;
+  left: -30px;
 }
 
-.stat-num {
-  font-size: 1.5rem;
+.hero-stats .stat-num {
+  font-size: 24px;
   font-weight: 800;
-  color: var(--accent);
-  display: block;
+  background: linear-gradient(135deg, var(--accent), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.stat-label {
-  font-size: 0.75rem;
+.hero-stats .stat-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 1px;
-  opacity: 0.8;
+  margin-top: 4px;
 }
 
-/* Work Badge (Bottom Right) */
+/* Badge Positioning */
 .hero-badge {
-  bottom: 20px;
-  right: -30px;
-  font-size: 0.85rem;
-  line-height: 1.5;
-  border-left: 4px solid var(--accent); /* Adds a nice accent strip */
+  bottom: -20px;
+  right: -20px;
+  text-align: right;
 }
 
-/* Border Animation */
-@keyframes rotateBorder {
-  0% { filter: hue-rotate(0deg); }
-  100% { filter: hue-rotate(360deg); }
+.badge-title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
 }
 
+.badge-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Badge Hover Interactivity */
+.hero-stats:hover, .hero-badge:hover {
+  transform: scale(1.08) translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ===== hero-visual ANIMATIONS ===== */
+
+/* Pulsing dot for "Open to Work" */
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #22c55e; /* Vibrant Green */
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  animation: pulseGreen 2s infinite;
+}
+
+@keyframes pulseGreen {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+/* Smooth gradient shifting for the border */
+@keyframes smoothGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 /* ===== SECTION BASE ===== */
 .section{
   position:relative;
@@ -1081,13 +1159,15 @@ footer{
     </div>
 
     <div class="hero-stats">
-      <span class="stat-num">50+</span>
-      <span class="stat-label">Projects Delivered</span>
+      <div class="stat-num">50+</div>
+      <div class="stat-label">Projects Delivered</div>
     </div>
 
     <div class="hero-badge">
-      <strong>Open to Work</strong><br>
-      Remote · Worldwide
+      <div class="badge-title">
+        <span class="pulse-dot"></span> Open to Work
+      </div>
+      <div class="badge-subtitle">Remote · Worldwide</div>
     </div>
   </div>
 </div>
