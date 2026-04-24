@@ -1,4 +1,4 @@
-# Abu Sayed - Professional Profile & Context for LLMs
+# Abu Sayed - Professional Profile
 
 ## Overview
 Abu Sayed is a multi-disciplinary Full Stack Developer, AI Engineer, Unity VR Developer, AWS Expert, and Musician based in Dhaka, Bangladesh. With over 5 years of experience and 50+ projects delivered worldwide, he specializes in building scalable AI-powered SaaS platforms, VR systems, and enterprise applications.
