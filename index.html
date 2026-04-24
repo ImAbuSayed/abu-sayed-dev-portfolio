@@ -460,31 +460,32 @@ nav{
 
 .hero-stats{
   position:absolute;
-  bottom:-26px;
-  left:-26px;
+  bottom:-20px;
+  left:-20px;
   background:var(--bg2);
-  border:1px solid var(--border);
+  border:1px solid var(--border-bright);
   padding:1rem 1.5rem;
   border-radius:4px;
-  backdrop-filter:blur(10px);
-  z-index:5;
+  backdrop-filter:blur(15px);
+  z-index:20; /* Above everything else */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .hero-badge{
   position:absolute;
-  top:-15px;
-  right:-15px;
+  top:-20px;
+  right:-20px;
   background:var(--bg2);
-  border:1px solid rgba(255,107,53,0.6);
+  border:1px solid rgba(255,107,53,0.8);
   padding:0.75rem 1rem;
   border-radius:4px;
   font-size:10px;
   color:var(--orange);
   font-family:var(--mono);
   text-align:center;
-  z-index:10;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-  backdrop-filter:blur(10px);
+  z-index:20; /* Above everything else */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  backdrop-filter:blur(15px);
 }
 
 /* ===== SECTION BASE ===== */
